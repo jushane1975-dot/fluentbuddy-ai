@@ -49,7 +49,7 @@
           Kaya mo 'yan! <span class="text-indigo-600">Let's practice English.</span>
         </h1>
         <p class="text-slate-500 text-sm md:text-base max-w-lg mx-auto">
-          Pick a scenario below. Tap the microphone to talk—your AI coach gives friendly pointers every turn!
+          Pick a scenario below. Tap the microphone to talk or type your reply—your AI coach gives friendly pointers every turn!
         </p>
       </div>
 
@@ -141,7 +141,7 @@
     </div>
 
     <!-- Active Call Screen -->
-    <div id="callScreen" class="hidden bg-white border border-slate-200 rounded-2xl shadow-xl flex flex-col h-[75vh] overflow-hidden">
+    <div id="callScreen" class="hidden bg-white border border-slate-200 rounded-2xl shadow-xl flex flex-col h-[80vh] overflow-hidden">
       <div class="bg-slate-900 text-white px-5 py-3 flex items-center justify-between">
         <div class="flex items-center gap-3">
           <span class="w-3 h-3 rounded-full bg-emerald-500 animate-pulse"></span>
@@ -150,25 +150,37 @@
             <p id="callContext" class="text-[11px] text-slate-400">Mock Call</p>
           </div>
         </div>
-        <div>
+        <div class="flex items-center gap-3">
           <span id="callTimer" class="font-mono text-sm text-emerald-400 font-bold">00:00</span>
+          <button onclick="finishCall()" class="text-xs bg-red-600 hover:bg-red-700 text-white font-bold px-3 py-1.5 rounded-lg transition">
+            End Session
+          </button>
         </div>
       </div>
 
       <div id="chatBox" class="flex-1 p-4 overflow-y-auto space-y-4 bg-slate-50"></div>
 
-      <div id="micIndicator" class="hidden bg-indigo-50 px-4 py-2 text-xs text-indigo-700 border-t border-indigo-100 flex items-center gap-2">
-        <span class="w-2 h-2 rounded-full bg-indigo-600 animate-ping"></span>
-        <span>Listening... Speak into your phone or laptop mic now.</span>
+      <div id="micIndicator" class="hidden bg-indigo-50 px-4 py-2 text-xs text-indigo-700 border-t border-indigo-100 flex items-center justify-between">
+        <div class="flex items-center gap-2">
+          <span class="w-2.5 h-2.5 rounded-full bg-red-500 animate-ping"></span>
+          <span id="liveHeardText" class="italic">Listening... speak clearly into your mic.</span>
+        </div>
+        <span class="text-[10px] text-slate-400 font-mono">LIVE SPEECH</span>
       </div>
 
-      <div class="p-4 bg-white border-t border-slate-200 flex items-center gap-3">
-        <button id="micBtn" onclick="toggleMic()" class="flex-1 py-3 px-4 rounded-xl font-bold text-sm text-white bg-indigo-600 hover:bg-indigo-700 shadow-md transition">
-          🎙️ Tap & Speak
-        </button>
-        <button onclick="finishCall()" class="py-3 px-5 rounded-xl font-bold text-sm bg-slate-100 text-slate-700 hover:bg-red-50 hover:text-red-600 border border-slate-200 transition">
-          End Call
-        </button>
+      <!-- Controls (Speech + Text Fallback) -->
+      <div class="p-3 bg-white border-t border-slate-200 space-y-2">
+        <div class="flex items-center gap-2">
+          <input id="userTextInput" type="text" placeholder="Type response here or tap mic to talk..." class="flex-1 border border-slate-300 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500" onkeydown="if(event.key === 'Enter') sendManualText()" />
+          <button onclick="sendManualText()" class="bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2.5 rounded-xl font-bold text-sm transition">
+            Send
+          </button>
+        </div>
+        <div class="flex items-center gap-2">
+          <button id="micBtn" onclick="toggleMic()" class="w-full py-2.5 px-4 rounded-xl font-bold text-sm text-indigo-700 bg-indigo-50 hover:bg-indigo-100 border border-indigo-200 transition flex items-center justify-center gap-2">
+            <span>🎙️</span> <span id="micLabel">Tap & Speak</span>
+          </button>
+        </div>
       </div>
     </div>
 
@@ -192,11 +204,11 @@
       <div class="space-y-3 mb-6 text-left text-sm">
         <div class="bg-slate-50 p-3 rounded-lg border border-slate-100">
           <p class="font-bold text-slate-800 text-xs">🌟 What went well:</p>
-          <p class="text-slate-600 text-xs mt-0.5">Quick response pacing and clear vocal delivery.</p>
+          <p class="text-slate-600 text-xs mt-0.5">Prompt response pacing and natural vocabulary.</p>
         </div>
         <div class="bg-slate-50 p-3 rounded-lg border border-slate-100">
           <p class="font-bold text-slate-800 text-xs">📈 Pro Coaching Tip:</p>
-          <p class="text-slate-600 text-xs mt-0.5">Remember to pause between sentences instead of using filler sounds like 'uhm'.</p>
+          <p class="text-slate-600 text-xs mt-0.5">Pause for a split-second before speaking to organize your thoughts cleanly.</p>
         </div>
       </div>
 
@@ -254,6 +266,7 @@
     let seconds = 0;
     let isListening = false;
     let reco = null;
+    let accumulatedText = "";
 
     // Tabs
     const btnConvo = document.getElementById('btnTabConvo');
@@ -276,7 +289,6 @@
       viewConvo.classList.add('hidden');
     };
 
-    // Audio & Speech
     function speakAudio(text) {
       if (!window.speechSynthesis) return;
       window.speechSynthesis.cancel();
@@ -288,47 +300,79 @@
 
     function initSpeech() {
       const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
-      if (SpeechRecognition) {
-        reco = new SpeechRecognition();
-        reco.continuous = false;
-        reco.interimResults = false;
-        reco.lang = "en-US";
+      if (!SpeechRecognition) return;
 
-        reco.onresult = (e) => {
-          const userMsg = e.results[0][0].transcript;
-          handleUserReply(userMsg);
-        };
-        reco.onend = () => setMicState(false);
-        reco.onerror = () => setMicState(false);
-      }
+      reco = new SpeechRecognition();
+      reco.continuous = true;
+      reco.interimResults = true;
+      reco.lang = "en-US";
+
+      reco.onresult = (e) => {
+        let interim = '';
+        for (let i = e.resultIndex; i < e.results.length; ++i) {
+          if (e.results[i].isFinal) {
+            accumulatedText += e.results[i][0].transcript + ' ';
+          } else {
+            interim += e.results[i][0].transcript;
+          }
+        }
+        const currentSpoken = (accumulatedText + interim).trim();
+        document.getElementById('liveHeardText').textContent = currentSpoken || "Listening...";
+        document.getElementById('userTextInput').value = currentSpoken;
+      };
+
+      reco.onerror = (e) => {
+        console.warn("Speech error:", e.error);
+        if (e.error === 'not-allowed') {
+          alert('Microphone blocked. Please allow mic permissions in Chrome settings or use the text box below.');
+        }
+      };
+
+      reco.onend = () => {
+        if (isListening) {
+          try { reco.start(); } catch(err){}
+        }
+      };
     }
     initSpeech();
 
     function setMicState(listening) {
       isListening = listening;
       const btn = document.getElementById('micBtn');
+      const lbl = document.getElementById('micLabel');
       const ind = document.getElementById('micIndicator');
+
       if (listening) {
-        btn.textContent = "🛑 Stop Speaking";
-        btn.className = "flex-1 py-3 px-4 rounded-xl font-bold text-sm text-white bg-red-500 animate-pulse transition";
+        accumulatedText = "";
+        lbl.textContent = "Stop & Send Speech";
+        btn.className = "w-full py-2.5 px-4 rounded-xl font-bold text-sm text-white bg-red-500 hover:bg-red-600 transition flex items-center justify-center gap-2 animate-pulse";
         ind.classList.remove('hidden');
+        document.getElementById('liveHeardText').textContent = "Listening... Speak now.";
       } else {
-        btn.textContent = "🎙️ Tap & Speak";
-        btn.className = "flex-1 py-3 px-4 rounded-xl font-bold text-sm text-white bg-indigo-600 hover:bg-indigo-700 shadow-md transition";
+        lbl.textContent = "Tap & Speak";
+        btn.className = "w-full py-2.5 px-4 rounded-xl font-bold text-sm text-indigo-700 bg-indigo-50 hover:bg-indigo-100 border border-indigo-200 transition flex items-center justify-center gap-2";
         ind.classList.add('hidden');
       }
     }
 
     function toggleMic() {
       if (!reco) {
-        alert("Speech recognition is not supported on this browser. Please use Chrome or Safari.");
+        alert("Speech recognition is not supported on this browser. You can type in the box below instead!");
         return;
       }
+
       if (isListening) {
+        isListening = false;
         reco.stop();
         setMicState(false);
+        const finalMsg = document.getElementById('userTextInput').value.trim();
+        if (finalMsg) {
+          handleUserReply(finalMsg);
+          document.getElementById('userTextInput').value = "";
+        }
       } else {
         try {
+          accumulatedText = "";
           reco.start();
           setMicState(true);
         } catch(e) {
@@ -337,7 +381,19 @@
       }
     }
 
-    // Call Flows
+    function sendManualText() {
+      const input = document.getElementById('userTextInput');
+      const val = input.value.trim();
+      if (!val) return;
+      if (isListening && reco) {
+        isListening = false;
+        reco.stop();
+        setMicState(false);
+      }
+      input.value = "";
+      handleUserReply(val);
+    }
+
     function startCall(id) {
       activeSc = id;
       const sc = SCENARIOS[id];
@@ -357,7 +413,7 @@
             ${sc.line}
           </div>
           <div class="mt-1.5 max-w-[80%] bg-amber-50 border border-amber-200 rounded-lg p-2 text-xs text-amber-800">
-            ✨ <b>Coach:</b> Take a breath and answer clearly. Tap the mic button below when ready to speak.
+            ✨ <b>Coach:</b> Tap the mic to talk, or type your response in the box below.
           </div>
         </div>
       `;
@@ -386,16 +442,16 @@
       chat.scrollTop = chat.scrollHeight;
 
       setTimeout(() => {
-        let reply = "I understand. Could you elaborate a bit more on that?";
-        let tip = "Good pacing! Keep opening your vowels clearly.";
+        let reply = "I understand. Could you tell me a little more?";
+        let tip = "Good pacing! Keep opening your mouth cleanly for each word.";
 
         const low = text.toLowerCase();
         if (activeSc === 'bpo-call') {
           if (low.includes('sorry') || low.includes('apologize') || low.includes('understand')) {
             reply = "Thank you for acknowledging that. What can you do right now to make sure my package gets delivered today?";
-            tip = "Great empathy! You calmed the caller. Maintain this steady, reassuring tone.";
+            tip = "Great empathy! You calmed the caller down. Maintain this steady, reassuring tone.";
           } else {
-            reply = "I'm still very frustrated! I need a real solution and tracking update right now!";
+            reply = "I'm still very upset! I need a real solution and tracking update right now!";
             tip = "Tip: Start with an empathetic phrase like 'I completely understand your frustration' to de-escalate.";
           }
         } else if (activeSc === 'job-interview') {
@@ -421,12 +477,16 @@
         `;
         chat.scrollTop = chat.scrollHeight;
         speakAudio(reply);
-      }, 700);
+      }, 600);
     }
 
     function finishCall() {
       clearInterval(timerInterval);
       if (window.speechSynthesis) window.speechSynthesis.cancel();
+      if (isListening && reco) {
+        isListening = false;
+        reco.stop();
+      }
       document.getElementById('callScreen').classList.add('hidden');
       document.getElementById('feedbackScreen').classList.remove('hidden');
       document.getElementById('fbMeta').textContent = `Duration: ${Math.floor(seconds/60)}m ${seconds%60}s`;
