@@ -4,185 +4,455 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>FluentBuddy AI - English Practice</title>
-  <!-- Tailwind CSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
-  <!-- React & ReactDOM CDN -->
-  <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
-  <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
-  <!-- Babel for JSX -->
-  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
-  <!-- Lucide Icons -->
-  <script src="https://unpkg.com/lucide@latest"></script>
 </head>
-<body class="bg-slate-50 text-slate-800 antialiased font-sans">
-  <div id="root"></div>
+<body class="bg-slate-50 text-slate-800 antialiased font-sans min-h-screen flex flex-col">
 
-  <script type="text/babel">
-    const { useState, useEffect, useRef } = React;
+  <!-- Header -->
+  <header class="bg-white border-b border-slate-200 sticky top-0 z-30 px-4 py-3 flex items-center justify-between shadow-sm">
+    <div class="flex items-center gap-2">
+      <div class="w-9 h-9 rounded-full bg-indigo-600 flex items-center justify-center text-white font-bold text-lg shadow-sm">
+        F
+      </div>
+      <span class="font-extrabold text-xl tracking-tight text-slate-800">
+        FluentBuddy <span class="text-indigo-600">AI</span>
+      </span>
+    </div>
+    <div class="flex items-center gap-3">
+      <span class="inline-flex items-center gap-1 text-xs font-semibold px-2.5 py-1 rounded-full bg-amber-50 text-amber-700 border border-amber-200">
+        🔥 0 Day Streak
+      </span>
+      <button id="passBtn" class="text-xs font-bold px-3 py-1.5 rounded-lg border bg-indigo-50 text-indigo-700 border-indigo-200 hover:bg-indigo-100 transition">
+        Get Pass (₱99)
+      </button>
+    </div>
+  </header>
 
-    const SCENARIOS = [
-      {
-        id: "job-interview",
-        title: "Job Interview",
-        desc: '"Tell me about yourself" & situational questions',
-        icon: "💼",
-        partnerRole: "HR Interviewer",
-        initialLine: "Hello! Welcome to your interview. To start off, could you tell me a little bit about yourself and your background?",
-        context: "Call Center / Professional Job Interview"
+  <!-- Main View -->
+  <main class="flex-1 max-w-3xl w-full mx-auto p-4 md:p-6">
+    <!-- Tab Controls -->
+    <div id="tabContainer" class="flex justify-center mb-8">
+      <div class="inline-flex p-1 bg-slate-200 rounded-xl">
+        <button id="btnTabConvo" class="px-6 py-2 rounded-lg text-sm font-semibold bg-indigo-600 text-white shadow-sm transition">
+          Conversation
+        </button>
+        <button id="btnTabDrills" class="px-6 py-2 rounded-lg text-sm font-semibold text-slate-600 hover:text-slate-900 transition">
+          Pronunciation
+        </button>
+      </div>
+    </div>
+
+    <!-- Conversation Tab Content -->
+    <div id="viewConvo">
+      <div class="text-center mb-8">
+        <h1 class="text-3xl font-extrabold text-slate-900 tracking-tight mb-2">
+          Kaya mo 'yan! <span class="text-indigo-600">Let's practice English.</span>
+        </h1>
+        <p class="text-slate-500 text-sm md:text-base max-w-lg mx-auto">
+          Pick a scenario below. Tap the microphone to talk—your AI coach gives friendly pointers every turn!
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        <div onclick="startCall('job-interview')" class="bg-white border border-slate-200 hover:border-indigo-500 hover:shadow-md transition cursor-pointer rounded-2xl p-5 flex flex-col justify-between">
+          <div>
+            <div class="text-3xl mb-3">💼</div>
+            <h3 class="font-bold text-lg text-slate-800">Job Interview</h3>
+            <p class="text-xs text-slate-500 mt-1">"Tell me about yourself" & behavioral interview questions.</p>
+          </div>
+          <div class="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between text-xs font-semibold text-indigo-600">
+            <span>Start Practice</span><span>→</span>
+          </div>
+        </div>
+
+        <div onclick="startCall('bpo-call')" class="bg-white border border-slate-200 hover:border-indigo-500 hover:shadow-md transition cursor-pointer rounded-2xl p-5 flex flex-col justify-between">
+          <div>
+            <div class="text-3xl mb-3">🎧</div>
+            <h3 class="font-bold text-lg text-slate-800">BPO Mock Call</h3>
+            <p class="text-xs text-slate-500 mt-1">Handle an irate US customer asking about lost orders.</p>
+          </div>
+          <div class="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between text-xs font-semibold text-indigo-600">
+            <span>Start Practice</span><span>→</span>
+          </div>
+        </div>
+
+        <div onclick="startCall('casual-daily')" class="bg-white border border-slate-200 hover:border-indigo-500 hover:shadow-md transition cursor-pointer rounded-2xl p-5 flex flex-col justify-between">
+          <div>
+            <div class="text-3xl mb-3">☕</div>
+            <h3 class="font-bold text-lg text-slate-800">Casual Daily English</h3>
+            <p class="text-xs text-slate-500 mt-1">Ordering coffee, small talk, and everyday situations.</p>
+          </div>
+          <div class="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between text-xs font-semibold text-indigo-600">
+            <span>Start Practice</span><span>→</span>
+          </div>
+        </div>
+
+        <div onclick="startCall('meetings')" class="bg-white border border-slate-200 hover:border-indigo-500 hover:shadow-md transition cursor-pointer rounded-2xl p-5 flex flex-col justify-between">
+          <div>
+            <div class="text-3xl mb-3">🖥️</div>
+            <h3 class="font-bold text-lg text-slate-800">Team Standup Meeting</h3>
+            <p class="text-xs text-slate-500 mt-1">Give crisp status updates and discuss road blockers.</p>
+          </div>
+          <div class="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between text-xs font-semibold text-indigo-600">
+            <span>Start Practice</span><span>→</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Pronunciation Tab Content -->
+    <div id="viewDrills" class="hidden">
+      <div class="text-center mb-6">
+        <h2 class="text-2xl font-bold text-slate-800">Pinoy Accent & Sound Drills</h2>
+        <p class="text-sm text-slate-500 mt-1">Practice challenging sounds often checked in call center accent evaluations.</p>
+      </div>
+
+      <div class="space-y-4">
+        <div class="bg-white border border-slate-200 rounded-xl p-4 shadow-sm">
+          <div class="flex items-center justify-between mb-2">
+            <span class="font-bold text-indigo-700">P vs F Sound</span>
+            <span class="text-xs bg-slate-100 px-2 py-0.5 rounded text-slate-600 font-medium">Drill #1</span>
+          </div>
+          <div class="flex items-center gap-3 my-3">
+            <button onclick="speakAudio('Pan')" class="flex-1 py-2 rounded-lg bg-indigo-50 hover:bg-indigo-100 text-indigo-800 font-bold border border-indigo-200 text-sm">🔊 Pan</button>
+            <span class="text-slate-400 font-bold text-xs">VS</span>
+            <button onclick="speakAudio('Fan')" class="flex-1 py-2 rounded-lg bg-indigo-50 hover:bg-indigo-100 text-indigo-800 font-bold border border-indigo-200 text-sm">🔊 Fan</button>
+          </div>
+          <p class="text-xs text-slate-600 bg-slate-50 p-2.5 rounded-lg border border-slate-100">
+            💡 <b>Tip:</b> Gently bite your lower lip with upper teeth for "Fan". Close both lips completely for "Pan".
+          </p>
+        </div>
+
+        <div class="bg-white border border-slate-200 rounded-xl p-4 shadow-sm">
+          <div class="flex items-center justify-between mb-2">
+            <span class="font-bold text-indigo-700">B vs V Sound</span>
+            <span class="text-xs bg-slate-100 px-2 py-0.5 rounded text-slate-600 font-medium">Drill #2</span>
+          </div>
+          <div class="flex items-center gap-3 my-3">
+            <button onclick="speakAudio('Berry')" class="flex-1 py-2 rounded-lg bg-indigo-50 hover:bg-indigo-100 text-indigo-800 font-bold border border-indigo-200 text-sm">🔊 Berry</button>
+            <span class="text-slate-400 font-bold text-xs">VS</span>
+            <button onclick="speakAudio('Very')" class="flex-1 py-2 rounded-lg bg-indigo-50 hover:bg-indigo-100 text-indigo-800 font-bold border border-indigo-200 text-sm">🔊 Very</button>
+          </div>
+          <p class="text-xs text-slate-600 bg-slate-50 p-2.5 rounded-lg border border-slate-100">
+            💡 <b>Tip:</b> Feel the vibration on your lower lip for "V". Release air with a pop for "B".
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Active Call Screen -->
+    <div id="callScreen" class="hidden bg-white border border-slate-200 rounded-2xl shadow-xl flex flex-col h-[75vh] overflow-hidden">
+      <div class="bg-slate-900 text-white px-5 py-3 flex items-center justify-between">
+        <div class="flex items-center gap-3">
+          <span class="w-3 h-3 rounded-full bg-emerald-500 animate-pulse"></span>
+          <div>
+            <h4 id="callRole" class="font-bold text-sm leading-tight">Interviewer</h4>
+            <p id="callContext" class="text-[11px] text-slate-400">Mock Call</p>
+          </div>
+        </div>
+        <div>
+          <span id="callTimer" class="font-mono text-sm text-emerald-400 font-bold">00:00</span>
+        </div>
+      </div>
+
+      <div id="chatBox" class="flex-1 p-4 overflow-y-auto space-y-4 bg-slate-50"></div>
+
+      <div id="micIndicator" class="hidden bg-indigo-50 px-4 py-2 text-xs text-indigo-700 border-t border-indigo-100 flex items-center gap-2">
+        <span class="w-2 h-2 rounded-full bg-indigo-600 animate-ping"></span>
+        <span>Listening... Speak into your phone or laptop mic now.</span>
+      </div>
+
+      <div class="p-4 bg-white border-t border-slate-200 flex items-center gap-3">
+        <button id="micBtn" onclick="toggleMic()" class="flex-1 py-3 px-4 rounded-xl font-bold text-sm text-white bg-indigo-600 hover:bg-indigo-700 shadow-md transition">
+          🎙️ Tap & Speak
+        </button>
+        <button onclick="finishCall()" class="py-3 px-5 rounded-xl font-bold text-sm bg-slate-100 text-slate-700 hover:bg-red-50 hover:text-red-600 border border-slate-200 transition">
+          End Call
+        </button>
+      </div>
+    </div>
+
+    <!-- Feedback Summary Screen -->
+    <div id="feedbackScreen" class="hidden bg-white border border-slate-200 rounded-2xl p-6 shadow-lg max-w-lg mx-auto text-center">
+      <div class="text-4xl mb-2">🎉</div>
+      <h3 class="text-2xl font-extrabold text-slate-800">Practice Completed!</h3>
+      <p id="fbMeta" class="text-xs text-slate-500 mb-6"></p>
+
+      <div class="grid grid-cols-2 gap-3 mb-6">
+        <div class="bg-emerald-50 border border-emerald-200 rounded-xl p-3">
+          <span class="text-xs text-emerald-600 font-bold uppercase block">Fluency</span>
+          <span class="text-2xl font-black text-emerald-700">88%</span>
+        </div>
+        <div class="bg-indigo-50 border border-indigo-200 rounded-xl p-3">
+          <span class="text-xs text-indigo-600 font-bold uppercase block">Clarity</span>
+          <span class="text-2xl font-black text-indigo-700">92%</span>
+        </div>
+      </div>
+
+      <div class="space-y-3 mb-6 text-left text-sm">
+        <div class="bg-slate-50 p-3 rounded-lg border border-slate-100">
+          <p class="font-bold text-slate-800 text-xs">🌟 What went well:</p>
+          <p class="text-slate-600 text-xs mt-0.5">Quick response pacing and clear vocal delivery.</p>
+        </div>
+        <div class="bg-slate-50 p-3 rounded-lg border border-slate-100">
+          <p class="font-bold text-slate-800 text-xs">📈 Pro Coaching Tip:</p>
+          <p class="text-slate-600 text-xs mt-0.5">Remember to pause between sentences instead of using filler sounds like 'uhm'.</p>
+        </div>
+      </div>
+
+      <button onclick="closeFeedback()" class="w-full py-3 bg-indigo-600 hover:bg-indigo-700 text-white font-bold rounded-xl shadow transition">
+        Practice Another Scenario
+      </button>
+    </div>
+  </main>
+
+  <!-- Pass Modal -->
+  <div id="passModal" class="hidden fixed inset-0 bg-slate-900/50 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+    <div class="bg-white rounded-2xl max-w-sm w-full p-6 shadow-2xl relative">
+      <button onclick="toggleModal(false)" class="absolute top-4 right-4 text-slate-400 hover:text-slate-700 font-bold">✕</button>
+      <div class="text-center mb-5">
+        <span class="text-xs font-bold px-2 py-0.5 rounded bg-emerald-100 text-emerald-700">Beta Access</span>
+        <h3 class="text-xl font-extrabold text-slate-900 mt-2">15-Day Practice Pass</h3>
+        <p class="text-2xl font-black text-indigo-600 mt-1">₱99 <span class="text-xs font-normal text-slate-500">/ 15 days</span></p>
+      </div>
+      <div class="bg-emerald-50 border border-emerald-200 rounded-xl p-3.5 mb-4 text-xs">
+        <p class="font-bold text-emerald-900">Send payment via GCash:</p>
+        <p class="font-mono text-emerald-800 font-bold text-sm my-0.5">09300564102</p>
+        <p class="text-emerald-700 text-[11px]">Type reference number or PIN <b>1234</b> to activate.</p>
+      </div>
+      <input id="refInput" type="text" placeholder="e.g. 1234" class="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm mb-3 focus:outline-none focus:ring-2 focus:ring-indigo-500" />
+      <button onclick="activatePass()" class="w-full py-2.5 bg-indigo-600 hover:bg-indigo-700 text-white font-bold rounded-lg text-sm transition">Activate Access</button>
+    </div>
+  </div>
+
+  <script>
+    const SCENARIOS = {
+      'job-interview': {
+        role: "HR Interviewer",
+        context: "Call Center / Job Interview",
+        line: "Hello! Welcome to your interview. To start off, could you tell me a little bit about yourself and your background?"
       },
-      {
-        id: "bpo-call",
-        title: "BPO Call Roleplay",
-        desc: "Handle a mock customer call (Angry/Inquiry)",
-        icon: "🎧",
-        partnerRole: "Angry Customer (US)",
-        initialLine: "Hi, I have been waiting for my replacement package for five days now and your tracking link is totally broken! What is going on?",
-        context: "US E-commerce Escalation Call"
+      'bpo-call': {
+        role: "Angry Customer (US)",
+        context: "US E-commerce Escalation Call",
+        line: "Hi, I have been waiting for my replacement package for five days now and your tracking link is totally broken! What is going on?"
       },
-      {
-        id: "casual-daily",
-        title: "Casual Daily English",
-        desc: "Small talk, ordering food, travel conversations",
-        icon: "☕",
-        partnerRole: "Barista / Local",
-        initialLine: "Good morning! Welcome to Central Roast. What can I get started for you today?",
-        context: "Coffee Shop Order"
+      'casual-daily': {
+        role: "Barista / Local",
+        context: "Coffee Shop Order",
+        line: "Good morning! Welcome to Central Roast. What can I get started for you today?"
       },
-      {
-        id: "meetings",
-        title: "Meetings & Presentations",
-        desc: "Give project updates and share team ideas",
-        icon: "🖥️",
-        partnerRole: "Team Lead",
-        initialLine: "Alright team, let's go around the room for our quick standup. What are you working on today and do you have any blockers?",
-        context: "Agile Standup Meeting"
+      'meetings': {
+        role: "Team Lead",
+        context: "Agile Standup Meeting",
+        line: "Alright team, let's go around the room for our standup. What are you working on today and do you have any blockers?"
       }
-    ];
+    };
 
-    const DRILLS = [
-      { pair: "P vs F", wordA: "Pan", wordB: "Fan", tip: "Bite your lower lip gently with top teeth for 'F'. Close both lips completely for 'P'." },
-      { pair: "B vs V", wordA: "Berry", wordB: "Very", tip: "'V' vibrates teeth on lower lip. 'B' releases air popping from closed lips." },
-      { pair: "Short I vs Long EE", wordA: "Ship", wordB: "Sheep", tip: "Relax your tongue for 'Ship'. Smile wide and tense the mouth for 'Sheep'." },
-      { pair: "TH vs S", wordA: "Think", wordB: "Sink", tip: "Tongue between teeth for 'Think'. Tongue behind teeth for 'Sink'." }
-    ];
+    let activeSc = null;
+    let timerInterval = null;
+    let seconds = 0;
+    let isListening = false;
+    let reco = null;
 
-    function App() {
-      const [tab, setTab] = useState("conversation");
-      const [activeScenario, setActiveScenario] = useState(null);
-      const [messages, setMessages] = useState([]);
-      const [isListening, setIsListening] = useState(false);
-      const [transcript, setTranscript] = useState("");
-      const [isSpeaking, setIsSpeaking] = useState(false);
-      const [callTime, setCallTime] = useState(0);
-      const [passActive, setPassActive] = useState(false);
-      const [showPassModal, setShowPassModal] = useState(false);
-      const [refNo, setRefNo] = useState("");
-      const [feedback, setFeedback] = useState(null);
+    // Tabs
+    const btnConvo = document.getElementById('btnTabConvo');
+    const btnDrills = document.getElementById('btnTabDrills');
+    const viewConvo = document.getElementById('viewConvo');
+    const viewDrills = document.getElementById('viewDrills');
+    const tabContainer = document.getElementById('tabContainer');
 
-      const recognitionRef = useRef(null);
-      const timerRef = useRef(null);
-      const chatEndRef = useRef(null);
+    btnConvo.onclick = () => {
+      btnConvo.className = "px-6 py-2 rounded-lg text-sm font-semibold bg-indigo-600 text-white shadow-sm transition";
+      btnDrills.className = "px-6 py-2 rounded-lg text-sm font-semibold text-slate-600 hover:text-slate-900 transition";
+      viewConvo.classList.remove('hidden');
+      viewDrills.classList.add('hidden');
+    };
 
-      useEffect(() => {
-        const storedPass = localStorage.getItem("fluentbuddy_pass");
-        if (storedPass === "active") setPassActive(true);
+    btnDrills.onclick = () => {
+      btnDrills.className = "px-6 py-2 rounded-lg text-sm font-semibold bg-indigo-600 text-white shadow-sm transition";
+      btnConvo.className = "px-6 py-2 rounded-lg text-sm font-semibold text-slate-600 hover:text-slate-900 transition";
+      viewDrills.classList.remove('hidden');
+      viewConvo.classList.add('hidden');
+    };
 
-        const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
-        if (SpeechRecognition) {
-          const reco = new SpeechRecognition();
-          reco.continuous = false;
-          reco.interimResults = false;
-          reco.lang = "en-US";
+    // Audio & Speech
+    function speakAudio(text) {
+      if (!window.speechSynthesis) return;
+      window.speechSynthesis.cancel();
+      const utter = new SpeechSynthesisUtterance(text);
+      utter.lang = "en-US";
+      utter.rate = 0.95;
+      window.speechSynthesis.speak(utter);
+    }
 
-          reco.onresult = (event) => {
-            const text = event.results[0][0].transcript;
-            setTranscript(text);
-            handleUserMessage(text);
-          };
+    function initSpeech() {
+      const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+      if (SpeechRecognition) {
+        reco = new SpeechRecognition();
+        reco.continuous = false;
+        reco.interimResults = false;
+        reco.lang = "en-US";
 
-          reco.onend = () => setIsListening(false);
-          reco.onerror = () => setIsListening(false);
-          recognitionRef.current = reco;
+        reco.onresult = (e) => {
+          const userMsg = e.results[0][0].transcript;
+          handleUserReply(userMsg);
+        };
+        reco.onend = () => setMicState(false);
+        reco.onerror = () => setMicState(false);
+      }
+    }
+    initSpeech();
+
+    function setMicState(listening) {
+      isListening = listening;
+      const btn = document.getElementById('micBtn');
+      const ind = document.getElementById('micIndicator');
+      if (listening) {
+        btn.textContent = "🛑 Stop Speaking";
+        btn.className = "flex-1 py-3 px-4 rounded-xl font-bold text-sm text-white bg-red-500 animate-pulse transition";
+        ind.classList.remove('hidden');
+      } else {
+        btn.textContent = "🎙️ Tap & Speak";
+        btn.className = "flex-1 py-3 px-4 rounded-xl font-bold text-sm text-white bg-indigo-600 hover:bg-indigo-700 shadow-md transition";
+        ind.classList.add('hidden');
+      }
+    }
+
+    function toggleMic() {
+      if (!reco) {
+        alert("Speech recognition is not supported on this browser. Please use Chrome or Safari.");
+        return;
+      }
+      if (isListening) {
+        reco.stop();
+        setMicState(false);
+      } else {
+        try {
+          reco.start();
+          setMicState(true);
+        } catch(e) {
+          console.error(e);
         }
-      }, []);
+      }
+    }
 
-      useEffect(() => {
-        chatEndRef.current?.scrollIntoView({ behavior: "smooth" });
-      }, [messages]);
+    // Call Flows
+    function startCall(id) {
+      activeSc = id;
+      const sc = SCENARIOS[id];
+      document.getElementById('callRole').textContent = sc.role;
+      document.getElementById('callContext').textContent = sc.context;
 
-      useEffect(() => {
-        if (activeScenario) {
-          timerRef.current = setInterval(() => setCallTime((t) => t + 1), 1000);
-        } else {
-          clearInterval(timerRef.current);
-          setCallTime(0);
+      tabContainer.classList.add('hidden');
+      viewConvo.classList.add('hidden');
+      viewDrills.classList.add('hidden');
+      document.getElementById('feedbackScreen').classList.add('hidden');
+      document.getElementById('callScreen').classList.remove('hidden');
+
+      const chat = document.getElementById('chatBox');
+      chat.innerHTML = `
+        <div class="flex flex-col items-start">
+          <div class="max-w-[85%] rounded-2xl rounded-bl-none px-4 py-2.5 text-sm bg-white text-slate-800 border border-slate-200 shadow-sm">
+            ${sc.line}
+          </div>
+          <div class="mt-1.5 max-w-[80%] bg-amber-50 border border-amber-200 rounded-lg p-2 text-xs text-amber-800">
+            ✨ <b>Coach:</b> Take a breath and answer clearly. Tap the mic button below when ready to speak.
+          </div>
+        </div>
+      `;
+
+      speakAudio(sc.line);
+
+      seconds = 0;
+      clearInterval(timerInterval);
+      timerInterval = setInterval(() => {
+        seconds++;
+        const m = String(Math.floor(seconds / 60)).padStart(2, '0');
+        const s = String(seconds % 60).padStart(2, '0');
+        document.getElementById('callTimer').textContent = `${m}:${s}`;
+      }, 1000);
+    }
+
+    function handleUserReply(text) {
+      const chat = document.getElementById('chatBox');
+      chat.innerHTML += `
+        <div class="flex flex-col items-end">
+          <div class="max-w-[85%] rounded-2xl rounded-br-none px-4 py-2.5 text-sm bg-indigo-600 text-white shadow-sm">
+            ${text}
+          </div>
+        </div>
+      `;
+      chat.scrollTop = chat.scrollHeight;
+
+      setTimeout(() => {
+        let reply = "I understand. Could you elaborate a bit more on that?";
+        let tip = "Good pacing! Keep opening your vowels clearly.";
+
+        const low = text.toLowerCase();
+        if (activeSc === 'bpo-call') {
+          if (low.includes('sorry') || low.includes('apologize') || low.includes('understand')) {
+            reply = "Thank you for acknowledging that. What can you do right now to make sure my package gets delivered today?";
+            tip = "Great empathy! You calmed the caller. Maintain this steady, reassuring tone.";
+          } else {
+            reply = "I'm still very frustrated! I need a real solution and tracking update right now!";
+            tip = "Tip: Start with an empathetic phrase like 'I completely understand your frustration' to de-escalate.";
+          }
+        } else if (activeSc === 'job-interview') {
+          reply = "That's quite impressive. Can you share an example of a difficult challenge you solved in your past role?";
+          tip = "Strong vocabulary! Remember to pause briefly between sentences instead of using fillers.";
+        } else if (activeSc === 'casual-daily') {
+          reply = "Got it! Would you like that iced or hot, and what size can I get for you?";
+          tip = "Very natural phrasing! Keep your intonation rising slightly on casual questions.";
+        } else if (activeSc === 'meetings') {
+          reply = "Sounds like solid progress. Do you need any assistance from design or engineering to unblock that?";
+          tip = "Crisp and concise update. Perfect cadence for business standups.";
         }
-        return () => clearInterval(timerRef.current);
-      }, [activeScenario]);
 
-      const speakText = (text) => {
-        if (!window.speechSynthesis) return;
-        window.speechSynthesis.cancel();
-        const utter = new SpeechSynthesisUtterance(text);
-        utter.lang = "en-US";
-        utter.rate = 0.95;
-        const voices = window.speechSynthesis.getVoices();
-        const usVoice = voices.find(v => v.lang.includes("en-US") || v.lang.includes("en_US"));
-        if (usVoice) utter.voice = usVoice;
+        chat.innerHTML += `
+          <div class="flex flex-col items-start">
+            <div class="max-w-[85%] rounded-2xl rounded-bl-none px-4 py-2.5 text-sm bg-white text-slate-800 border border-slate-200 shadow-sm">
+              ${reply}
+            </div>
+            <div class="mt-1.5 max-w-[80%] bg-amber-50 border border-amber-200 rounded-lg p-2 text-xs text-amber-800">
+              ✨ <b>Coach:</b> ${tip}
+            </div>
+          </div>
+        `;
+        chat.scrollTop = chat.scrollHeight;
+        speakAudio(reply);
+      }, 700);
+    }
 
-        utter.onstart = () => setIsSpeaking(true);
-        utter.onend = () => setIsSpeaking(false);
-        utter.onerror = () => setIsSpeaking(false);
+    function finishCall() {
+      clearInterval(timerInterval);
+      if (window.speechSynthesis) window.speechSynthesis.cancel();
+      document.getElementById('callScreen').classList.add('hidden');
+      document.getElementById('feedbackScreen').classList.remove('hidden');
+      document.getElementById('fbMeta').textContent = `Duration: ${Math.floor(seconds/60)}m ${seconds%60}s`;
+    }
 
-        window.speechSynthesis.speak(utter);
-      };
+    function closeFeedback() {
+      document.getElementById('feedbackScreen').classList.add('hidden');
+      tabContainer.classList.remove('hidden');
+      viewConvo.classList.remove('hidden');
+    }
 
-      const startScenario = (sc) => {
-        setActiveScenario(sc);
-        const initial = [{ sender: "bot", text: sc.initialLine, tip: "Take a breath. Speak clearly and acknowledge what they said." }];
-        setMessages(initial);
-        setFeedback(null);
-        setTimeout(() => speakText(sc.initialLine), 400);
-      };
-
-      const toggleMic = () => {
-        if (!recognitionRef.current) {
-          alert("Microphone recognition is not supported on this browser. Please use Chrome or Safari.");
-          return;
-        }
-        if (isListening) {
-          recognitionRef.current.stop();
-          setIsListening(false);
-        } else {
-          setTranscript("");
-          recognitionRef.current.start();
-          setIsListening(true);
-        }
-      };
-
-      const handleUserMessage = (userText) => {
-        if (!userText.trim()) return;
-        const newConvo = [...messages, { sender: "user", text: userText }];
-        setMessages(newConvo);
-
-        setTimeout(() => {
-          let reply = "I understand. Could you tell me more about that?";
-          let tip = "Good pacing! Try opening your vowels wider for better resonance.";
-
-          const lower = userText.toLowerCase();
-          if (activeScenario.id === "bpo-call") {
-            if (lower.includes("sorry") || lower.includes("apologize") || lower.includes("understand")) {
-              reply = "Thank you for acknowledging that. What can you do right now to make sure my package gets delivered today?";
-              tip = "Excellent empathy! You calmed the caller. Maintain this steady, reassuring tone.";
-            } else {
-              reply = "I'm still very frustrated! I need a real solution and tracking update right now!";
-              tip = "Tip: Start with an empathetic phrase like 'I completely understand your frustration, sir' to de-escalate.";
-            }
-          } else if (activeScenario.id === "job-interview") {
-            reply = "That's quite impressive. Can you share an example of a difficult challenge you solved in your past role?";
-            tip = "Strong vocabulary! Remember to pause briefly between ideas instead of using fillers.";
-          } else if (activeScenario.id === "casual-daily") {
-            reply = "Got it! Would you like that iced or hot, and what size can I get for you?";
-            tip = "Very natural phrasing! Keep your intonation rising slightly on casual questions.";
-          } else if (activeScenario.id === "meetings") {
-            reply = "Sounds like solid progress. Do you need any assistance from design or engineering
+    // Modal
+    document.getElementById('passBtn').onclick = () => toggleModal(true);
+    function toggleModal(open) {
+      document.getElementById('passModal').classList.toggle('hidden', !open);
+    }
+    function activatePass() {
+      const val = document.getElementById('refInput').value.trim();
+      if (val.length >= 4) {
+        localStorage.setItem('fluentbuddy_pass', 'active');
+        toggleModal(false);
+        alert('Pass Activated successfully!');
+      } else {
+        alert('Please enter a valid GCash Reference Number or PIN.');
+      }
+    }
+  </script>
+</body>
+</html>
