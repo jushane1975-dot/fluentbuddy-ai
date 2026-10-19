@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>FluentBuddy AI - English Practice</title>
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- React & ReactDOM CDN -->
+  <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+  <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+  <!-- Babel for JSX -->
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body class="bg-slate-50 text-slate-800 antialiased font-sans">
+  <div id="root"></div>
+
+  <script type="text/babel">
+    const { useState, useEffect, useRef } = React;
+
+    const SCENARIOS = [
+      {
+        id: "job-interview",
+        title: "Job Interview",
+        desc: '"Tell me about yourself" & situational questions',
+        icon: "💼",
+        partnerRole: "HR Interviewer",
+        initialLine: "Hello! Welcome to your interview. To start off, could you tell me a little bit about yourself and your background?",
+        context: "Call Center / Professional Job Interview"
+      },
+      {
+        id: "bpo-call",
+        title: "BPO Call Roleplay",
+        desc: "Handle a mock customer call (Angry/Inquiry)",
+        icon: "🎧",
+        partnerRole: "Angry Customer (US)",
+        initialLine: "Hi, I have been waiting for my replacement package for five days now and your tracking link is totally broken! What is going on?",
+        context: "US E-commerce Escalation Call"
+      },
+      {
+        id: "casual-daily",
+        title: "Casual Daily English",
+        desc: "Small talk, ordering food, travel conversations",
+        icon: "☕",
+        partnerRole: "Barista / Local",
+        initialLine: "Good morning! Welcome to Central Roast. What can I get started for you today?",
+        context: "Coffee Shop Order"
+      },
+      {
+        id: "meetings",
+        title: "Meetings & Presentations",
+        desc: "Give project updates and share team ideas",
+        icon: "🖥️",
+        partnerRole: "Team Lead",
+        initialLine: "Alright team, let's go around the room for our quick standup. What are you working on today and do you have any blockers?",
+        context: "Agile Standup Meeting"
+      }
+    ];
+
+    const DRILLS = [
+      { pair: "P vs F", wordA: "Pan", wordB: "Fan", tip: "Bite your lower lip gently with top teeth for 'F'. Close both lips completely for 'P'." },
+      { pair: "B vs V", wordA: "Berry", wordB: "Very", tip: "'V' vibrates teeth on lower lip. 'B' releases air popping from closed lips." },
+      { pair: "Short I vs Long EE", wordA: "Ship", wordB: "Sheep", tip: "Relax your tongue for 'Ship'. Smile wide and tense the mouth for 'Sheep'." },
+      { pair: "TH vs S", wordA: "Think", wordB: "Sink", tip: "Tongue between teeth for 'Think'. Tongue behind teeth for 'Sink'." }
+    ];
+
+    function App() {
+      const [tab, setTab] = useState("conversation");
+      const [activeScenario, setActiveScenario] = useState(null);
+      const [messages, setMessages] = useState([]);
+      const [isListening, setIsListening] = useState(false);
+      const [transcript, setTranscript] = useState("");
+      const [isSpeaking, setIsSpeaking] = useState(false);
+      const [callTime, setCallTime] = useState(0);
+      const [passActive, setPassActive] = useState(false);
+      const [showPassModal, setShowPassModal] = useState(false);
+      const [refNo, setRefNo] = useState("");
+      const [feedback, setFeedback] = useState(null);
+
+      const recognitionRef = useRef(null);
+      const timerRef = useRef(null);
+      const chatEndRef = useRef(null);
+
+      useEffect(() => {
+        const storedPass = localStorage.getItem("fluentbuddy_pass");
+        if (storedPass === "active") setPassActive(true);
+
+        const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+        if (SpeechRecognition) {
+          const reco = new SpeechRecognition();
+          reco.continuous = false;
+          reco.interimResults = false;
+          reco.lang = "en-US";
+
+          reco.onresult = (event) => {
+            const text = event.results[0][0].transcript;
+            setTranscript(text);
+            handleUserMessage(text);
+          };
+
+          reco.onend = () => setIsListening(false);
+          reco.onerror = () => setIsListening(false);
+          recognitionRef.current = reco;
+        }
+      }, []);
+
+      useEffect(() => {
+        chatEndRef.current?.scrollIntoView({ behavior: "smooth" });
+      }, [messages]);
+
+      useEffect(() => {
+        if (activeScenario) {
+          timerRef.current = setInterval(() => setCallTime((t) => t + 1), 1000);
+        } else {
+          clearInterval(timerRef.current);
+          setCallTime(0);
+        }
+        return () => clearInterval(timerRef.current);
+      }, [activeScenario]);
+
+      const speakText = (text) => {
+        if (!window.speechSynthesis) return;
+        window.speechSynthesis.cancel();
+        const utter = new SpeechSynthesisUtterance(text);
+        utter.lang = "en-US";
+        utter.rate = 0.95;
+        const voices = window.speechSynthesis.getVoices();
+        const usVoice = voices.find(v => v.lang.includes("en-US") || v.lang.includes("en_US"));
+        if (usVoice) utter.voice = usVoice;
+
+        utter.onstart = () => setIsSpeaking(true);
+        utter.onend = () => setIsSpeaking(false);
+        utter.onerror = () => setIsSpeaking(false);
+
+        window.speechSynthesis.speak(utter);
+      };
+
+      const startScenario = (sc) => {
+        setActiveScenario(sc);
+        const initial = [{ sender: "bot", text: sc.initialLine, tip: "Take a breath. Speak clearly and acknowledge what they said." }];
+        setMessages(initial);
+        setFeedback(null);
+        setTimeout(() => speakText(sc.initialLine), 400);
+      };
+
+      const toggleMic = () => {
+        if (!recognitionRef.current) {
+          alert("Microphone recognition is not supported on this browser. Please use Chrome or Safari.");
+          return;
+        }
+        if (isListening) {
+          recognitionRef.current.stop();
+          setIsListening(false);
+        } else {
+          setTranscript("");
+          recognitionRef.current.start();
+          setIsListening(true);
+        }
+      };
+
+      const handleUserMessage = (userText) => {
+        if (!userText.trim()) return;
+        const newConvo = [...messages, { sender: "user", text: userText }];
+        setMessages(newConvo);
+
+        setTimeout(() => {
+          let reply = "I understand. Could you tell me more about that?";
+          let tip = "Good pacing! Try opening your vowels wider for better resonance.";
+
+          const lower = userText.toLowerCase();
+          if (activeScenario.id === "bpo-call") {
+            if (lower.includes("sorry") || lower.includes("apologize") || lower.includes("understand")) {
+              reply = "Thank you for acknowledging that. What can you do right now to make sure my package gets delivered today?";
+              tip = "Excellent empathy! You calmed the caller. Maintain this steady, reassuring tone.";
+            } else {
+              reply = "I'm still very frustrated! I need a real solution and tracking update right now!";
+              tip = "Tip: Start with an empathetic phrase like 'I completely understand your frustration, sir' to de-escalate.";
+            }
+          } else if (activeScenario.id === "job-interview") {
+            reply = "That's quite impressive. Can you share an example of a difficult challenge you solved in your past role?";
+            tip = "Strong vocabulary! Remember to pause briefly between ideas instead of using fillers.";
+          } else if (activeScenario.id === "casual-daily") {
+            reply = "Got it! Would you like that iced or hot, and what size can I get for you?";
+            tip = "Very natural phrasing! Keep your intonation rising slightly on casual questions.";
+          } else if (activeScenario.id === "meetings") {
+            reply = "Sounds like solid progress. Do you need any assistance from design or engineering
