@@ -80,7 +80,7 @@
           <div>
             <div class="text-3xl mb-3">☕</div>
             <h3 class="font-bold text-lg text-slate-800">Casual Daily English</h3>
-            <p class="text-xs text-slate-500 mt-1">Ordering coffee, small talk, and everyday situations.</p>
+            <p class="text-xs text-slate-500 mt-1">Ordering coffee, small talk, and pastry upsells.</p>
           </div>
           <div class="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between text-xs font-semibold text-indigo-600">
             <span>Start Practice</span><span>→</span>
@@ -168,7 +168,7 @@
         <span class="text-[10px] text-slate-400 font-mono">LIVE SPEECH</span>
       </div>
 
-      <!-- Controls (Speech + Text Fallback) -->
+      <!-- Controls -->
       <div class="p-3 bg-white border-t border-slate-200 space-y-2">
         <div class="flex items-center gap-2">
           <input id="userTextInput" type="text" placeholder="Type response here or tap mic to talk..." class="flex-1 border border-slate-300 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500" onkeydown="if(event.key === 'Enter') sendManualText()" />
@@ -193,22 +193,22 @@
       <div class="grid grid-cols-2 gap-3 mb-6">
         <div class="bg-emerald-50 border border-emerald-200 rounded-xl p-3">
           <span class="text-xs text-emerald-600 font-bold uppercase block">Fluency</span>
-          <span class="text-2xl font-black text-emerald-700">88%</span>
+          <span class="text-2xl font-black text-emerald-700">90%</span>
         </div>
         <div class="bg-indigo-50 border border-indigo-200 rounded-xl p-3">
           <span class="text-xs text-indigo-600 font-bold uppercase block">Clarity</span>
-          <span class="text-2xl font-black text-indigo-700">92%</span>
+          <span class="text-2xl font-black text-indigo-700">94%</span>
         </div>
       </div>
 
       <div class="space-y-3 mb-6 text-left text-sm">
         <div class="bg-slate-50 p-3 rounded-lg border border-slate-100">
           <p class="font-bold text-slate-800 text-xs">🌟 What went well:</p>
-          <p class="text-slate-600 text-xs mt-0.5">Prompt response pacing and natural vocabulary.</p>
+          <p class="text-slate-600 text-xs mt-0.5">Smooth conversation flow, good responsiveness, and clear intent.</p>
         </div>
         <div class="bg-slate-50 p-3 rounded-lg border border-slate-100">
           <p class="font-bold text-slate-800 text-xs">📈 Pro Coaching Tip:</p>
-          <p class="text-slate-600 text-xs mt-0.5">Pause for a split-second before speaking to organize your thoughts cleanly.</p>
+          <p class="text-slate-600 text-xs mt-0.5">Instead of saying "I was like hot", use "I'd like a hot small one, please" for cleaner professional phrasing.</p>
         </div>
       </div>
 
@@ -238,30 +238,116 @@
   </div>
 
   <script>
+    // Multi-turn conversational flows
     const SCENARIOS = {
+      'casual-daily': {
+        role: "Barista / Local",
+        context: "Coffee Shop Order",
+        steps: [
+          {
+            ai: "Good morning! Welcome to Central Roast. What can I get started for you today?",
+            tip: "Say what coffee you want (e.g. 'Can I get a cappuccino?')",
+            aiReply: (text) => "Awesome! Hot or iced cappuccino, and what size would you like?",
+            coachTip: "Tip: Say 'I would like a hot small cappuccino, please.'"
+          },
+          {
+            aiReply: (text) => "Got it, small hot cappuccino! Would you like oat milk, regular milk, or any caramel syrup with that?",
+            coachTip: "Nice choice! Now mention your milk preference or syrup."
+          },
+          {
+            aiReply: (text) => "Sounds delicious. Would you also like a toasted chocolate croissant or blueberry muffin to go with your coffee?",
+            coachTip: "You can say 'No thank you, just the coffee' or choose a pastry!"
+          },
+          {
+            aiReply: (text) => "Perfect! That will be $4.75. Cash or card today?",
+            coachTip: "Answer with 'I'll pay with card' or 'Cash, please.'"
+          },
+          {
+            aiReply: (text) => "All set! Here is your receipt and your fresh cappuccino will be ready right at the counter in two minutes. Have a wonderful day!",
+            coachTip: "Great practice! Tap 'End Session' above to see your summary."
+          }
+        ]
+      },
       'job-interview': {
         role: "HR Interviewer",
         context: "Call Center / Job Interview",
-        line: "Hello! Welcome to your interview. To start off, could you tell me a little bit about yourself and your background?"
+        steps: [
+          {
+            ai: "Hello! Welcome to your interview. To start off, could you tell me a little bit about yourself and your background?",
+            tip: "Briefly share your experience, skills, and why you are excited for this role.",
+            aiReply: (text) => "Thank you for sharing that. Why do you want to work with our company specifically?",
+            coachTip: "Show company interest and what value you can contribute."
+          },
+          {
+            aiReply: (text) => "Good answer. Tell me about a time you handled a difficult situation with a coworker or client. How did you resolve it?",
+            coachTip: "Use the STAR method: Situation, Task, Action, Result."
+          },
+          {
+            aiReply: (text) => "Well handled! Where do you see yourself professionally in the next two to three years?",
+            coachTip: "Highlight professional growth and commitment."
+          },
+          {
+            aiReply: (text) => "Excellent. That covers all my questions today. Do you have any questions for me about the team or company?",
+            coachTip: "Ask a question like: 'What does success look like in this role?'"
+          },
+          {
+            aiReply: (text) => "Great question! We will be in touch with the next steps by tomorrow. Thank you for your time!",
+            coachTip: "Politely thank the interviewer and tap 'End Session'."
+          }
+        ]
       },
       'bpo-call': {
         role: "Angry Customer (US)",
         context: "US E-commerce Escalation Call",
-        line: "Hi, I have been waiting for my replacement package for five days now and your tracking link is totally broken! What is going on?"
-      },
-      'casual-daily': {
-        role: "Barista / Local",
-        context: "Coffee Shop Order",
-        line: "Good morning! Welcome to Central Roast. What can I get started for you today?"
+        steps: [
+          {
+            ai: "Hi, I have been waiting for my replacement package for five days now and your tracking link is totally broken! What is going on?",
+            tip: "Acknowledge frustration and offer an immediate apology with empathy.",
+            aiReply: (text) => "Well, saying sorry won't get my package here! What can you do right now to check where it actually is?",
+            coachTip: "Ask for their order number or email with calm assurance."
+          },
+          {
+            aiReply: (text) => "My order number is #88491. Please tell me it isn't lost again!",
+            coachTip: "Assure the caller you are pulling up the file right now."
+          },
+          {
+            aiReply: (text) => "Okay, thank you for checking. Can you expedite the shipping so it arrives tomorrow?",
+            coachTip: "Confirm the expedited status or offer a tracking update by SMS."
+          },
+          {
+            aiReply: (text) => "Alright, I appreciate you resolving that quickly. Can you send the confirmation to my email?",
+            coachTip: "Confirm email delivery and ask if there is anything else."
+          },
+          {
+            aiReply: (text) => "That's everything. Thank you for your patience.",
+            coachTip: "Deliver standard call center closing and tap 'End Session'."
+          }
+        ]
       },
       'meetings': {
         role: "Team Lead",
         context: "Agile Standup Meeting",
-        line: "Alright team, let's go around the room for our standup. What are you working on today and do you have any blockers?"
+        steps: [
+          {
+            ai: "Alright team, let's go around the room for our standup. What did you finish yesterday?",
+            tip: "State 1-2 completed tasks clearly and concisely.",
+            aiReply: (text) => "Great progress! What are your priority tasks for today?",
+            coachTip: "Outline your main goals for today."
+          },
+          {
+            aiReply: (text) => "Got it. Do you have any blockers or need help from design or backend?",
+            coachTip: "Say 'No blockers on my end' or mention what you need."
+          },
+          {
+            aiReply: (text) => "Awesome! Let's sync up after the call if anything comes up. Good luck today!",
+            coachTip: "Acknowledge with 'Thanks, talk to you later!' and tap End Session."
+          }
+        ]
       }
     };
 
     let activeSc = null;
+    let currentStep = 0;
     let timerInterval = null;
     let seconds = 0;
     let isListening = false;
@@ -323,9 +409,6 @@
 
       reco.onerror = (e) => {
         console.warn("Speech error:", e.error);
-        if (e.error === 'not-allowed') {
-          alert('Microphone blocked. Please allow mic permissions in Chrome settings or use the text box below.');
-        }
       };
 
       reco.onend = () => {
@@ -357,7 +440,7 @@
 
     function toggleMic() {
       if (!reco) {
-        alert("Speech recognition is not supported on this browser. You can type in the box below instead!");
+        alert("Speech recognition is not supported on this browser. You can type in the box below!");
         return;
       }
 
@@ -396,6 +479,7 @@
 
     function startCall(id) {
       activeSc = id;
+      currentStep = 0;
       const sc = SCENARIOS[id];
       document.getElementById('callRole').textContent = sc.role;
       document.getElementById('callContext').textContent = sc.context;
@@ -407,18 +491,19 @@
       document.getElementById('callScreen').classList.remove('hidden');
 
       const chat = document.getElementById('chatBox');
+      const initialStep = sc.steps[0];
       chat.innerHTML = `
         <div class="flex flex-col items-start">
           <div class="max-w-[85%] rounded-2xl rounded-bl-none px-4 py-2.5 text-sm bg-white text-slate-800 border border-slate-200 shadow-sm">
-            ${sc.line}
+            ${initialStep.ai}
           </div>
           <div class="mt-1.5 max-w-[80%] bg-amber-50 border border-amber-200 rounded-lg p-2 text-xs text-amber-800">
-            ✨ <b>Coach:</b> Tap the mic to talk, or type your response in the box below.
+            ✨ <b>Coach:</b> ${initialStep.tip}
           </div>
         </div>
       `;
 
-      speakAudio(sc.line);
+      speakAudio(initialStep.ai);
 
       seconds = 0;
       clearInterval(timerInterval);
@@ -442,28 +527,21 @@
       chat.scrollTop = chat.scrollHeight;
 
       setTimeout(() => {
-        let reply = "I understand. Could you tell me a little more?";
-        let tip = "Good pacing! Keep opening your mouth cleanly for each word.";
+        const sc = SCENARIOS[activeSc];
+        const step = sc.steps[currentStep];
 
-        const low = text.toLowerCase();
-        if (activeSc === 'bpo-call') {
-          if (low.includes('sorry') || low.includes('apologize') || low.includes('understand')) {
-            reply = "Thank you for acknowledging that. What can you do right now to make sure my package gets delivered today?";
-            tip = "Great empathy! You calmed the caller down. Maintain this steady, reassuring tone.";
-          } else {
-            reply = "I'm still very upset! I need a real solution and tracking update right now!";
-            tip = "Tip: Start with an empathetic phrase like 'I completely understand your frustration' to de-escalate.";
-          }
-        } else if (activeSc === 'job-interview') {
-          reply = "That's quite impressive. Can you share an example of a difficult challenge you solved in your past role?";
-          tip = "Strong vocabulary! Remember to pause briefly between sentences instead of using fillers.";
-        } else if (activeSc === 'casual-daily') {
-          reply = "Got it! Would you like that iced or hot, and what size can I get for you?";
-          tip = "Very natural phrasing! Keep your intonation rising slightly on casual questions.";
-        } else if (activeSc === 'meetings') {
-          reply = "Sounds like solid progress. Do you need any assistance from design or engineering to unblock that?";
-          tip = "Crisp and concise update. Perfect cadence for business standups.";
+        let reply = "";
+        let coachTip = "";
+
+        if (step && step.aiReply) {
+          reply = step.aiReply(text);
+          coachTip = step.coachTip;
+        } else {
+          reply = "Thank you so much! You did an awesome job in this conversation practice.";
+          coachTip = "Session complete! Click 'End Session' at the top to view your feedback.";
         }
+
+        currentStep++;
 
         chat.innerHTML += `
           <div class="flex flex-col items-start">
@@ -471,7 +549,7 @@
               ${reply}
             </div>
             <div class="mt-1.5 max-w-[80%] bg-amber-50 border border-amber-200 rounded-lg p-2 text-xs text-amber-800">
-              ✨ <b>Coach:</b> ${tip}
+              ✨ <b>Coach:</b> ${coachTip}
             </div>
           </div>
         `;
