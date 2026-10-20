@@ -54,15 +54,15 @@
       </div>
 
       <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-        <!-- Job Interview -->
-        <div onclick="startCall('job-interview')" role="button" tabindex="0" class="bg-white border border-slate-200 hover:border-indigo-500 hover:shadow-md transition cursor-pointer rounded-2xl p-5 flex flex-col justify-between select-none active:scale-[0.98]">
+        <!-- Job Interview Card (Opens Track Selector) -->
+        <div onclick="openInterviewModal()" role="button" tabindex="0" class="bg-white border border-slate-200 hover:border-indigo-500 hover:shadow-md transition cursor-pointer rounded-2xl p-5 flex flex-col justify-between select-none active:scale-[0.98]">
           <div>
             <div class="text-3xl mb-3">💼</div>
             <h3 class="font-bold text-lg text-slate-800">Job Interview</h3>
-            <p class="text-xs text-slate-500 mt-1">"Tell me about yourself" & behavioral interview questions.</p>
+            <p class="text-xs text-slate-500 mt-1">Choose General, BPO, or Track 3 (Google Ads, GHL, SEO, VA).</p>
           </div>
           <div class="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between text-xs font-semibold text-indigo-600">
-            <span>Start Practice</span><span>→</span>
+            <span>Select Track</span><span>→</span>
           </div>
         </div>
 
@@ -71,7 +71,7 @@
           <div>
             <div class="text-3xl mb-3">🎧</div>
             <h3 class="font-bold text-lg text-slate-800">BPO Mock Call</h3>
-            <p class="text-xs text-slate-500 mt-1">Handle an angry customer checking a delayed shipment.</p>
+            <p class="text-xs text-slate-500 mt-1">Handle an angry US customer checking a delayed shipment.</p>
           </div>
           <div class="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between text-xs font-semibold text-indigo-600">
             <span>Start Practice</span><span>→</span>
@@ -83,7 +83,7 @@
           <div>
             <div class="text-3xl mb-3">☕</div>
             <h3 class="font-bold text-lg text-slate-800">Daily: Coffee Shop</h3>
-            <p class="text-xs text-slate-500 mt-1">Order coffee, specify size, milk choices, and pastry.</p>
+            <p class="text-xs text-slate-500 mt-1">Order coffee, specify size, milk choices, and snacks.</p>
           </div>
           <div class="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between text-xs font-semibold text-indigo-600">
             <span>Start Practice</span><span>→</span>
@@ -95,7 +95,7 @@
           <div>
             <div class="text-3xl mb-3">🛒</div>
             <h3 class="font-bold text-lg text-slate-800">Daily: Grocery Checkout</h3>
-            <p class="text-xs text-slate-500 mt-1">Cashier inquiry, bag options, rewards, and card payments.</p>
+            <p class="text-xs text-slate-500 mt-1">Cashier inquiry, ecobags, membership points, and card payments.</p>
           </div>
           <div class="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between text-xs font-semibold text-indigo-600">
             <span>Start Practice</span><span>→</span>
@@ -152,30 +152,10 @@
           </div>
         </div>
 
-        <!-- S vs SH -->
-        <div class="bg-white border border-slate-200 rounded-xl p-4 shadow-sm">
-          <div class="flex items-center justify-between mb-2">
-            <span class="font-bold text-indigo-700">3. S vs SH Sound</span>
-            <span class="text-xs bg-slate-100 px-2 py-0.5 rounded text-slate-600 font-medium">Clarity Check</span>
-          </div>
-          <div class="flex items-center gap-3 my-2">
-            <button onclick="speakAudio('Sea')" class="flex-1 py-2 rounded-lg bg-indigo-50 hover:bg-indigo-100 text-indigo-800 font-bold border border-indigo-200 text-xs">🔊 Sea</button>
-            <span class="text-slate-400 font-bold text-xs">VS</span>
-            <button onclick="speakAudio('She')" class="flex-1 py-2 rounded-lg bg-indigo-50 hover:bg-indigo-100 text-indigo-800 font-bold border border-indigo-200 text-xs">🔊 She</button>
-          </div>
-          <div class="bg-slate-50 p-3 rounded-lg border border-slate-200 mt-2">
-            <p class="text-xs text-slate-500 font-semibold mb-1">🗣️ Practice Sentence:</p>
-            <p class="text-sm font-medium text-slate-800">"She sells special shoes at the shopping store."</p>
-            <button onclick="speakAudio('She sells special shoes at the shopping store.')" class="mt-2 text-xs bg-indigo-600 hover:bg-indigo-700 text-white font-bold px-3 py-1.5 rounded-lg flex items-center gap-1">
-              <span>🔊 Listen to Sentence</span>
-            </button>
-          </div>
-        </div>
-
         <!-- TH Sound -->
         <div class="bg-white border border-slate-200 rounded-xl p-4 shadow-sm">
           <div class="flex items-center justify-between mb-2">
-            <span class="font-bold text-indigo-700">4. TH Sound</span>
+            <span class="font-bold text-indigo-700">3. TH Sound</span>
             <span class="text-xs bg-slate-100 px-2 py-0.5 rounded text-slate-600 font-medium">Tongue Position</span>
           </div>
           <div class="flex items-center gap-3 my-2">
@@ -212,10 +192,8 @@
         </div>
       </div>
 
-      <!-- Messages Box -->
       <div id="chatBox" class="flex-1 p-4 overflow-y-auto space-y-4 bg-slate-50"></div>
 
-      <!-- Mic Active Indicator -->
       <div id="micIndicator" class="hidden bg-indigo-50 px-4 py-2 text-xs text-indigo-700 border-t border-indigo-100 flex items-center justify-between">
         <div class="flex items-center gap-2">
           <span class="w-2.5 h-2.5 rounded-full bg-red-500 animate-ping"></span>
@@ -263,6 +241,59 @@
     </div>
   </main>
 
+  <!-- Track Selection Modal for Interviews -->
+  <div id="interviewModal" class="hidden fixed inset-0 bg-slate-900/50 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+    <div class="bg-white rounded-2xl max-w-md w-full p-6 shadow-2xl relative">
+      <button onclick="toggleInterviewModal(false)" class="absolute top-4 right-4 text-slate-400 hover:text-slate-700 font-bold">✕</button>
+      <div class="mb-4">
+        <h3 class="text-xl font-extrabold text-slate-900">Select Interview Track</h3>
+        <p class="text-xs text-slate-500">Piliin ang naaayon sa iyong role o experience level:</p>
+      </div>
+
+      <div class="space-y-3">
+        <!-- Track 1 -->
+        <div onclick="pickTrack('interview-general')" class="p-3 rounded-xl border border-slate-200 hover:border-emerald-500 hover:bg-emerald-50/50 cursor-pointer transition">
+          <div class="flex items-center gap-2">
+            <span class="text-lg">🟢</span>
+            <span class="font-bold text-sm text-slate-800">Track 1: General & Beginner</span>
+          </div>
+          <p class="text-[11px] text-slate-500 ml-7">"Tell me about yourself", strengths, weaknesses, work history.</p>
+        </div>
+
+        <!-- Track 2 -->
+        <div onclick="pickTrack('interview-bpo')" class="p-3 rounded-xl border border-slate-200 hover:border-blue-500 hover:bg-blue-50/50 cursor-pointer transition">
+          <div class="flex items-center gap-2">
+            <span class="text-lg">🔵</span>
+            <span class="font-bold text-sm text-slate-800">Track 2: BPO & Customer Service</span>
+          </div>
+          <p class="text-[11px] text-slate-500 ml-7">Handling pressure, metrics, empathy, and challenging callers.</p>
+        </div>
+
+        <!-- Track 3 Sub-Menu -->
+        <div class="p-3 rounded-xl border border-indigo-200 bg-indigo-50/40">
+          <div class="flex items-center gap-2 mb-2">
+            <span class="text-lg">🟣</span>
+            <span class="font-bold text-sm text-indigo-950">Track 3: Freelance & Specialized VA</span>
+          </div>
+          <div class="grid grid-cols-2 gap-2 ml-2">
+            <button onclick="pickTrack('track3-google-ads')" class="py-2 px-2.5 rounded-lg bg-white border border-indigo-200 text-xs font-semibold text-indigo-900 hover:bg-indigo-600 hover:text-white transition text-left">
+              🎯 Google Ads
+            </button>
+            <button onclick="pickTrack('track3-ghl')" class="py-2 px-2.5 rounded-lg bg-white border border-indigo-200 text-xs font-semibold text-indigo-900 hover:bg-indigo-600 hover:text-white transition text-left">
+              ⚙️ GoHighLevel (GHL)
+            </button>
+            <button onclick="pickTrack('track3-seo')" class="py-2 px-2.5 rounded-lg bg-white border border-indigo-200 text-xs font-semibold text-indigo-900 hover:bg-indigo-600 hover:text-white transition text-left">
+              🔍 SEO Specialist
+            </button>
+            <button onclick="pickTrack('track3-general-va')" class="py-2 px-2.5 rounded-lg bg-white border border-indigo-200 text-xs font-semibold text-indigo-900 hover:bg-indigo-600 hover:text-white transition text-left">
+              📋 General / Tech VA
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <!-- Pass Modal -->
   <div id="passModal" class="hidden fixed inset-0 bg-slate-900/50 backdrop-blur-sm z-50 flex items-center justify-center p-4">
     <div class="bg-white rounded-2xl max-w-sm w-full p-6 shadow-2xl relative">
@@ -284,6 +315,137 @@
 
   <script>
     const SCENARIOS = {
+      // General Track 1
+      'interview-general': {
+        role: "HR Interviewer",
+        context: "Track 1: General Interview",
+        steps: [
+          {
+            ai: "Welcome! To start off, could you please tell me a little bit about yourself and your background?",
+            tip: "Share your experience, work mindset, and what motivates you.",
+            aiReply: () => "Thank you for sharing that. Why do you want to join our organization specifically?",
+            coachTip: "Highlight the company reputation and your desire to contribute."
+          },
+          {
+            aiReply: () => "What would you consider your greatest professional strength and one area you are improving?",
+            coachTip: "Be honest about your strength and explain how you improve your weakness."
+          },
+          {
+            aiReply: () => "Where do you see yourself professionally in two to three years?",
+            coachTip: "Show commitment to continuous learning and career growth."
+          },
+          {
+            aiReply: () => "Thank you! We will email you the next steps shortly. Have a great day!",
+            coachTip: "Politely thank the interviewer and tap 'End Session'."
+          }
+        ]
+      },
+      // BPO Track 2
+      'interview-bpo': {
+        role: "Operations Manager",
+        context: "Track 2: BPO Assessment",
+        steps: [
+          {
+            ai: "Hello! Can you tell me about a time you handled an upset customer or an escalated call?",
+            tip: "Use the STAR method: explain the issue, your empathy spiel, and the resolution.",
+            aiReply: () => "Good. How do you keep yourself calm and motivated during back-to-back demanding calls?",
+            coachTip: "Mention deep breathing, mental focus, and maintaining empathy."
+          },
+          {
+            aiReply: () => "Why did you choose the BPO industry over other career paths?",
+            coachTip: "Highlight career growth, communication training, and fast-paced environment."
+          },
+          {
+            aiReply: () => "Excellent responses. We will review your speaking assessment today. Thank you!",
+            coachTip: "Thank the manager and tap 'End Session'."
+          }
+        ]
+      },
+      // Track 3: Google Ads
+      'track3-google-ads': {
+        role: "Agency Client",
+        context: "Track 3: Google Ads Specialist Interview",
+        steps: [
+          {
+            ai: "Hi! How do you typically structure a new Search campaign for a local service business?",
+            tip: "Mention single-theme ad groups, negative keywords, match types, and ad extensions.",
+            aiReply: () => "Great. If a client's cost-per-lead starts spiking mid-month, what is your step-by-step troubleshooting process?",
+            coachTip: "Explain search terms review, Quality Score check, bid strategy, and landing page conversion rate."
+          },
+          {
+            aiReply: () => "How do you decide between Maximize Conversions with a target CPA versus manual bidding?",
+            coachTip: "Mention historical conversion volume needed before using smart automated bidding."
+          },
+          {
+            aiReply: () => "Impressive knowledge! That covers our technical ad questions. Thank you!",
+            coachTip: "Thank the client warmly and tap 'End Session'."
+          }
+        ]
+      },
+      // Track 3: GoHighLevel (GHL)
+      'track3-ghl': {
+        role: "Marketing Director",
+        context: "Track 3: GoHighLevel (GHL) Specialist Interview",
+        steps: [
+          {
+            ai: "Hello! Can you describe a lead capture and automated follow-up workflow you built inside GoHighLevel?",
+            tip: "Mention triggers (form/webhook), wait steps, conditional if/else branches, and SMS/email sequences.",
+            aiReply: () => "How do you troubleshoot when leads aren't advancing properly to the next pipeline stage?",
+            coachTip: "Mention checking Workflow Execution Logs, trigger criteria, and tag requirements."
+          },
+          {
+            aiReply: () => "Have you integrated external apps with GHL using webhooks or Make.com?",
+            coachTip: "Share your experience connecting CRM data, Google Sheets, or custom webhooks."
+          },
+          {
+            aiReply: () => "Awesome! You clearly understand automation workflows. We'll be in touch soon!",
+            coachTip: "Thank them and tap 'End Session'."
+          }
+        ]
+      },
+      // Track 3: SEO Specialist
+      'track3-seo': {
+        role: "E-commerce Founder",
+        context: "Track 3: SEO Specialist Interview",
+        steps: [
+          {
+            ai: "Welcome! What is your step-by-step checklist when performing an on-page SEO audit on a client website?",
+            tip: "Mention title tags, meta descriptions, header hierarchy (H1-H3), internal links, and page speed.",
+            aiReply: () => "How do you find low-competition keywords with high commercial buyer intent?",
+            coachTip: "Explain long-tail keyword research, search intent analysis, and competitor content gap analysis."
+          },
+          {
+            aiReply: () => "If a website suddenly drops in organic traffic after a Google core update, what do you check first?",
+            coachTip: "Mention Search Console queries, crawl errors, content quality, and backlink health."
+          },
+          {
+            aiReply: () => "Very thorough SEO approach! Thank you for walking me through your process.",
+            coachTip: "Thank the client and tap 'End Session'."
+          }
+        ]
+      },
+      // Track 3: General / Tech VA
+      'track3-general-va': {
+        role: "Business Owner",
+        context: "Track 3: Executive & Tech VA Interview",
+        steps: [
+          {
+            ai: "Hi! What tools and platforms do you use daily to manage tasks, communications, and schedules?",
+            tip: "Mention tools like Google Workspace, Notion, Slack, Loom, and project boards.",
+            aiReply: () => "If you receive vague or unclear instructions from a client, how do you handle it without delaying the task?",
+            coachTip: "Explain how you ask clarifying questions and send short Loom video updates."
+          },
+          {
+            aiReply: () => "How do you handle urgent tasks when multiple deadlines happen at the same time?",
+            coachTip: "Highlight prioritization, client communication, and setting realistic turnaround times."
+          },
+          {
+            aiReply: () => "You have great communication skills. Thank you so much for your time today!",
+            coachTip: "Thank the client and tap 'End Session'."
+          }
+        ]
+      },
+      // Casual Coffee
       'casual-coffee': {
         role: "Barista",
         context: "Coffee Shop Order",
@@ -299,10 +461,6 @@
             coachTip: "State your milk choice or say 'Just regular milk, please.'"
           },
           {
-            aiReply: () => "Delicious! Would you like a fresh croissant or muffin to go with your coffee?",
-            coachTip: "Say 'No thanks, just the coffee' or choose a pastry."
-          },
-          {
             aiReply: () => "All set! That will be $4.50. Will you be paying with cash or card today?",
             coachTip: "Say 'I'll pay with card, please.'"
           },
@@ -312,6 +470,7 @@
           }
         ]
       },
+      // Casual Grocery
       'casual-grocery': {
         role: "Cashier",
         context: "Supermarket Checkout",
@@ -323,7 +482,7 @@
             coachTip: "State if you have a rewards card."
           },
           {
-            aiReply: () => "Alright. Do you need paper bags or did you bring your own bag?",
+            aiReply: () => "Alright. Do you need paper bags or did you bring your own reusable bag?",
             coachTip: "State your bag choice."
           },
           {
@@ -336,34 +495,7 @@
           }
         ]
       },
-      'job-interview': {
-        role: "HR Interviewer",
-        context: "Job Interview",
-        steps: [
-          {
-            ai: "Welcome to your interview! Could you please tell me a little bit about yourself and your work background?",
-            tip: "Share your experience and relevant skills.",
-            aiReply: () => "Thank you for sharing that. Why do you want to join our company specifically?",
-            coachTip: "Explain why you are interested in this specific role."
-          },
-          {
-            aiReply: () => "Good. How do you handle stressful deadlines or high-volume tasks?",
-            coachTip: "Mention prioritization and staying calm under pressure."
-          },
-          {
-            aiReply: () => "Impressive. Where do you see yourself professionally in two to three years?",
-            coachTip: "Mention skill growth and career development."
-          },
-          {
-            aiReply: () => "That covers our interview questions. Do you have any questions for me about the role?",
-            coachTip: "Ask a question about team culture or next steps."
-          },
-          {
-            aiReply: () => "We will email you the results by tomorrow afternoon. Thank you for your time!",
-            coachTip: "Politely thank the interviewer and tap 'End Session'."
-          }
-        ]
-      },
+      // BPO Escalation Call
       'bpo-call': {
         role: "Angry Customer (US)",
         context: "US E-commerce Escalation Call",
@@ -461,6 +593,19 @@
         viewDrills.classList.remove('hidden');
         viewConvo.classList.add('hidden');
       }
+    };
+
+    window.openInterviewModal = function() {
+      document.getElementById('interviewModal').classList.remove('hidden');
+    };
+
+    window.toggleInterviewModal = function(open) {
+      document.getElementById('interviewModal').classList.toggle('hidden', !open);
+    };
+
+    window.pickTrack = function(trackId) {
+      toggleInterviewModal(false);
+      startCall(trackId);
     };
 
     window.speakAudio = function(text) {
