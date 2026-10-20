@@ -37,7 +37,7 @@
           Conversation
         </button>
         <button id="btnTabDrills" class="px-6 py-2 rounded-lg text-sm font-semibold text-slate-600 hover:text-slate-900 transition">
-          Pronunciation
+          Pronunciation Drills
         </button>
       </div>
     </div>
@@ -49,11 +49,12 @@
           Kaya mo 'yan! <span class="text-indigo-600">Let's practice English.</span>
         </h1>
         <p class="text-slate-500 text-sm md:text-base max-w-lg mx-auto">
-          Pick a scenario below. Tap the microphone to talk or type your reply—your AI coach gives friendly pointers every turn!
+          Pumili ng sitwasyon sa ibaba. Sa bawat sagot mo, <b>ire-rate at itatama agad</b> ang iyong English sentence!
         </p>
       </div>
 
       <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        <!-- Job Interview -->
         <div onclick="startCall('job-interview')" class="bg-white border border-slate-200 hover:border-indigo-500 hover:shadow-md transition cursor-pointer rounded-2xl p-5 flex flex-col justify-between">
           <div>
             <div class="text-3xl mb-3">💼</div>
@@ -65,33 +66,36 @@
           </div>
         </div>
 
+        <!-- BPO Mock Call -->
         <div onclick="startCall('bpo-call')" class="bg-white border border-slate-200 hover:border-indigo-500 hover:shadow-md transition cursor-pointer rounded-2xl p-5 flex flex-col justify-between">
           <div>
             <div class="text-3xl mb-3">🎧</div>
             <h3 class="font-bold text-lg text-slate-800">BPO Mock Call</h3>
-            <p class="text-xs text-slate-500 mt-1">Handle an irate US customer asking about lost orders.</p>
+            <p class="text-xs text-slate-500 mt-1">Handle an angry customer checking a delayed shipment.</p>
           </div>
           <div class="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between text-xs font-semibold text-indigo-600">
             <span>Start Practice</span><span>→</span>
           </div>
         </div>
 
-        <div onclick="startCall('casual-daily')" class="bg-white border border-slate-200 hover:border-indigo-500 hover:shadow-md transition cursor-pointer rounded-2xl p-5 flex flex-col justify-between">
+        <!-- Coffee Shop -->
+        <div onclick="startCall('casual-coffee')" class="bg-white border border-slate-200 hover:border-indigo-500 hover:shadow-md transition cursor-pointer rounded-2xl p-5 flex flex-col justify-between">
           <div>
             <div class="text-3xl mb-3">☕</div>
-            <h3 class="font-bold text-lg text-slate-800">Casual Daily English</h3>
-            <p class="text-xs text-slate-500 mt-1">Ordering coffee, small talk, and pastry upsells.</p>
+            <h3 class="font-bold text-lg text-slate-800">Daily: Coffee Shop</h3>
+            <p class="text-xs text-slate-500 mt-1">Order coffee, specify size, milk choices, and pastry.</p>
           </div>
           <div class="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between text-xs font-semibold text-indigo-600">
             <span>Start Practice</span><span>→</span>
           </div>
         </div>
 
-        <div onclick="startCall('meetings')" class="bg-white border border-slate-200 hover:border-indigo-500 hover:shadow-md transition cursor-pointer rounded-2xl p-5 flex flex-col justify-between">
+        <!-- Grocery Checkout -->
+        <div onclick="startCall('casual-grocery')" class="bg-white border border-slate-200 hover:border-indigo-500 hover:shadow-md transition cursor-pointer rounded-2xl p-5 flex flex-col justify-between">
           <div>
-            <div class="text-3xl mb-3">🖥️</div>
-            <h3 class="font-bold text-lg text-slate-800">Team Standup Meeting</h3>
-            <p class="text-xs text-slate-500 mt-1">Give crisp status updates and discuss road blockers.</p>
+            <div class="text-3xl mb-3">🛒</div>
+            <h3 class="font-bold text-lg text-slate-800">Daily: Grocery Checkout</h3>
+            <p class="text-xs text-slate-500 mt-1">Cashier inquiry, bag options, rewards, and card payments.</p>
           </div>
           <div class="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between text-xs font-semibold text-indigo-600">
             <span>Start Practice</span><span>→</span>
@@ -100,54 +104,104 @@
       </div>
     </div>
 
-    <!-- Pronunciation Tab Content -->
+    <!-- Pronunciation Tab Content (Sentences & Audio) -->
     <div id="viewDrills" class="hidden">
       <div class="text-center mb-6">
         <h2 class="text-2xl font-bold text-slate-800">Pinoy Accent & Sound Drills</h2>
-        <p class="text-sm text-slate-500 mt-1">Practice challenging sounds often checked in call center accent evaluations.</p>
+        <p class="text-sm text-slate-500 mt-1">Pakinggan ang buong sample sentences at sabayan nang malinaw!</p>
       </div>
 
       <div class="space-y-4">
+        <!-- Drill 1: P vs F -->
         <div class="bg-white border border-slate-200 rounded-xl p-4 shadow-sm">
           <div class="flex items-center justify-between mb-2">
-            <span class="font-bold text-indigo-700">P vs F Sound</span>
-            <span class="text-xs bg-slate-100 px-2 py-0.5 rounded text-slate-600 font-medium">Drill #1</span>
+            <span class="font-bold text-indigo-700">1. P vs F Sound</span>
+            <span class="text-xs bg-slate-100 px-2 py-0.5 rounded text-slate-600 font-medium">BPO Essential</span>
           </div>
-          <div class="flex items-center gap-3 my-3">
-            <button onclick="speakAudio('Pan')" class="flex-1 py-2 rounded-lg bg-indigo-50 hover:bg-indigo-100 text-indigo-800 font-bold border border-indigo-200 text-sm">🔊 Pan</button>
+          <div class="flex items-center gap-3 my-2">
+            <button onclick="speakAudio('Pan')" class="flex-1 py-2 rounded-lg bg-indigo-50 hover:bg-indigo-100 text-indigo-800 font-bold border border-indigo-200 text-xs">🔊 Pan</button>
             <span class="text-slate-400 font-bold text-xs">VS</span>
-            <button onclick="speakAudio('Fan')" class="flex-1 py-2 rounded-lg bg-indigo-50 hover:bg-indigo-100 text-indigo-800 font-bold border border-indigo-200 text-sm">🔊 Fan</button>
+            <button onclick="speakAudio('Fan')" class="flex-1 py-2 rounded-lg bg-indigo-50 hover:bg-indigo-100 text-indigo-800 font-bold border border-indigo-200 text-xs">🔊 Fan</button>
           </div>
-          <p class="text-xs text-slate-600 bg-slate-50 p-2.5 rounded-lg border border-slate-100">
-            💡 <b>Tip:</b> Gently bite your lower lip with upper teeth for "Fan". Close both lips completely for "Pan".
-          </p>
+          <div class="bg-slate-50 p-3 rounded-lg border border-slate-200 mt-2">
+            <p class="text-xs text-slate-500 font-semibold mb-1">🗣️ Practice Sentence:</p>
+            <p class="text-sm font-medium text-slate-800">"Please pour fresh coffee into the paper cup for Frank."</p>
+            <button onclick="speakAudio('Please pour fresh coffee into the paper cup for Frank.')" class="mt-2 text-xs bg-indigo-600 hover:bg-indigo-700 text-white font-bold px-3 py-1.5 rounded-lg flex items-center gap-1">
+              <span>🔊 Listen to Sentence</span>
+            </button>
+          </div>
         </div>
 
+        <!-- Drill 2: B vs V -->
         <div class="bg-white border border-slate-200 rounded-xl p-4 shadow-sm">
           <div class="flex items-center justify-between mb-2">
-            <span class="font-bold text-indigo-700">B vs V Sound</span>
-            <span class="text-xs bg-slate-100 px-2 py-0.5 rounded text-slate-600 font-medium">Drill #2</span>
+            <span class="font-bold text-indigo-700">2. B vs V Sound</span>
+            <span class="text-xs bg-slate-100 px-2 py-0.5 rounded text-slate-600 font-medium">BPO Essential</span>
           </div>
-          <div class="flex items-center gap-3 my-3">
-            <button onclick="speakAudio('Berry')" class="flex-1 py-2 rounded-lg bg-indigo-50 hover:bg-indigo-100 text-indigo-800 font-bold border border-indigo-200 text-sm">🔊 Berry</button>
+          <div class="flex items-center gap-3 my-2">
+            <button onclick="speakAudio('Berry')" class="flex-1 py-2 rounded-lg bg-indigo-50 hover:bg-indigo-100 text-indigo-800 font-bold border border-indigo-200 text-xs">🔊 Berry</button>
             <span class="text-slate-400 font-bold text-xs">VS</span>
-            <button onclick="speakAudio('Very')" class="flex-1 py-2 rounded-lg bg-indigo-50 hover:bg-indigo-100 text-indigo-800 font-bold border border-indigo-200 text-sm">🔊 Very</button>
+            <button onclick="speakAudio('Very')" class="flex-1 py-2 rounded-lg bg-indigo-50 hover:bg-indigo-100 text-indigo-800 font-bold border border-indigo-200 text-xs">🔊 Very</button>
           </div>
-          <p class="text-xs text-slate-600 bg-slate-50 p-2.5 rounded-lg border border-slate-100">
-            💡 <b>Tip:</b> Feel the vibration on your lower lip for "V". Release air with a pop for "B".
-          </p>
+          <div class="bg-slate-50 p-3 rounded-lg border border-slate-200 mt-2">
+            <p class="text-xs text-slate-500 font-semibold mb-1">🗣️ Practice Sentence:</p>
+            <p class="text-sm font-medium text-slate-800">"Victor bought a very bright blue vest for the big event."</p>
+            <button onclick="speakAudio('Victor bought a very bright blue vest for the big event.')" class="mt-2 text-xs bg-indigo-600 hover:bg-indigo-700 text-white font-bold px-3 py-1.5 rounded-lg flex items-center gap-1">
+              <span>🔊 Listen to Sentence</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Drill 3: S vs SH -->
+        <div class="bg-white border border-slate-200 rounded-xl p-4 shadow-sm">
+          <div class="flex items-center justify-between mb-2">
+            <span class="font-bold text-indigo-700">3. S vs SH Sound</span>
+            <span class="text-xs bg-slate-100 px-2 py-0.5 rounded text-slate-600 font-medium">Clarity Check</span>
+          </div>
+          <div class="flex items-center gap-3 my-2">
+            <button onclick="speakAudio('Sea')" class="flex-1 py-2 rounded-lg bg-indigo-50 hover:bg-indigo-100 text-indigo-800 font-bold border border-indigo-200 text-xs">🔊 Sea</button>
+            <span class="text-slate-400 font-bold text-xs">VS</span>
+            <button onclick="speakAudio('She')" class="flex-1 py-2 rounded-lg bg-indigo-50 hover:bg-indigo-100 text-indigo-800 font-bold border border-indigo-200 text-xs">🔊 She</button>
+          </div>
+          <div class="bg-slate-50 p-3 rounded-lg border border-slate-200 mt-2">
+            <p class="text-xs text-slate-500 font-semibold mb-1">🗣️ Practice Sentence:</p>
+            <p class="text-sm font-medium text-slate-800">"She sells special shoes at the shopping store."</p>
+            <button onclick="speakAudio('She sells special shoes at the shopping store.')" class="mt-2 text-xs bg-indigo-600 hover:bg-indigo-700 text-white font-bold px-3 py-1.5 rounded-lg flex items-center gap-1">
+              <span>🔊 Listen to Sentence</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Drill 4: TH Sound -->
+        <div class="bg-white border border-slate-200 rounded-xl p-4 shadow-sm">
+          <div class="flex items-center justify-between mb-2">
+            <span class="font-bold text-indigo-700">4. TH Sound</span>
+            <span class="text-xs bg-slate-100 px-2 py-0.5 rounded text-slate-600 font-medium">Tongue Position</span>
+          </div>
+          <div class="flex items-center gap-3 my-2">
+            <button onclick="speakAudio('Think')" class="flex-1 py-2 rounded-lg bg-indigo-50 hover:bg-indigo-100 text-indigo-800 font-bold border border-indigo-200 text-xs">🔊 Think</button>
+            <span class="text-slate-400 font-bold text-xs">VS</span>
+            <button onclick="speakAudio('Sink')" class="flex-1 py-2 rounded-lg bg-indigo-50 hover:bg-indigo-100 text-indigo-800 font-bold border border-indigo-200 text-xs">🔊 Sink</button>
+          </div>
+          <div class="bg-slate-50 p-3 rounded-lg border border-slate-200 mt-2">
+            <p class="text-xs text-slate-500 font-semibold mb-1">🗣️ Practice Sentence:</p>
+            <p class="text-sm font-medium text-slate-800">"I think those thirty thermal cups belong to them."</p>
+            <button onclick="speakAudio('I think those thirty thermal cups belong to them.')" class="mt-2 text-xs bg-indigo-600 hover:bg-indigo-700 text-white font-bold px-3 py-1.5 rounded-lg flex items-center gap-1">
+              <span>🔊 Listen to Sentence</span>
+            </button>
+          </div>
         </div>
       </div>
     </div>
 
     <!-- Active Call Screen -->
-    <div id="callScreen" class="hidden bg-white border border-slate-200 rounded-2xl shadow-xl flex flex-col h-[80vh] overflow-hidden">
+    <div id="callScreen" class="hidden bg-white border border-slate-200 rounded-2xl shadow-xl flex flex-col h-[82vh] overflow-hidden">
       <div class="bg-slate-900 text-white px-5 py-3 flex items-center justify-between">
         <div class="flex items-center gap-3">
           <span class="w-3 h-3 rounded-full bg-emerald-500 animate-pulse"></span>
           <div>
-            <h4 id="callRole" class="font-bold text-sm leading-tight">Interviewer</h4>
-            <p id="callContext" class="text-[11px] text-slate-400">Mock Call</p>
+            <h4 id="callRole" class="font-bold text-sm leading-tight">Speaker</h4>
+            <p id="callContext" class="text-[11px] text-slate-400">Interactive Practice</p>
           </div>
         </div>
         <div class="flex items-center gap-3">
@@ -158,20 +212,22 @@
         </div>
       </div>
 
+      <!-- Messages Box -->
       <div id="chatBox" class="flex-1 p-4 overflow-y-auto space-y-4 bg-slate-50"></div>
 
+      <!-- Mic Listening Status Bar -->
       <div id="micIndicator" class="hidden bg-indigo-50 px-4 py-2 text-xs text-indigo-700 border-t border-indigo-100 flex items-center justify-between">
         <div class="flex items-center gap-2">
           <span class="w-2.5 h-2.5 rounded-full bg-red-500 animate-ping"></span>
-          <span id="liveHeardText" class="italic">Listening... speak clearly into your mic.</span>
+          <span id="liveHeardText" class="italic">Listening to your voice...</span>
         </div>
-        <span class="text-[10px] text-slate-400 font-mono">LIVE SPEECH</span>
+        <span class="text-[10px] text-slate-400 font-mono">MIC ACTIVE</span>
       </div>
 
-      <!-- Controls -->
+      <!-- Input Controls -->
       <div class="p-3 bg-white border-t border-slate-200 space-y-2">
         <div class="flex items-center gap-2">
-          <input id="userTextInput" type="text" placeholder="Type response here or tap mic to talk..." class="flex-1 border border-slate-300 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500" onkeydown="if(event.key === 'Enter') sendManualText()" />
+          <input id="userTextInput" type="text" placeholder="Type here or tap mic to speak..." class="flex-1 border border-slate-300 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500" onkeydown="if(event.key === 'Enter') sendManualText()" />
           <button onclick="sendManualText()" class="bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2.5 rounded-xl font-bold text-sm transition">
             Send
           </button>
@@ -184,7 +240,7 @@
       </div>
     </div>
 
-    <!-- Feedback Summary Screen -->
+    <!-- Final Summary Feedback Screen -->
     <div id="feedbackScreen" class="hidden bg-white border border-slate-200 rounded-2xl p-6 shadow-lg max-w-lg mx-auto text-center">
       <div class="text-4xl mb-2">🎉</div>
       <h3 class="text-2xl font-extrabold text-slate-800">Practice Completed!</h3>
@@ -192,23 +248,12 @@
 
       <div class="grid grid-cols-2 gap-3 mb-6">
         <div class="bg-emerald-50 border border-emerald-200 rounded-xl p-3">
-          <span class="text-xs text-emerald-600 font-bold uppercase block">Fluency</span>
-          <span class="text-2xl font-black text-emerald-700">90%</span>
+          <span class="text-xs text-emerald-600 font-bold uppercase block">Average Score</span>
+          <span id="overallScore" class="text-2xl font-black text-emerald-700">92%</span>
         </div>
         <div class="bg-indigo-50 border border-indigo-200 rounded-xl p-3">
-          <span class="text-xs text-indigo-600 font-bold uppercase block">Clarity</span>
-          <span class="text-2xl font-black text-indigo-700">94%</span>
-        </div>
-      </div>
-
-      <div class="space-y-3 mb-6 text-left text-sm">
-        <div class="bg-slate-50 p-3 rounded-lg border border-slate-100">
-          <p class="font-bold text-slate-800 text-xs">🌟 What went well:</p>
-          <p class="text-slate-600 text-xs mt-0.5">Smooth conversation flow, good responsiveness, and clear intent.</p>
-        </div>
-        <div class="bg-slate-50 p-3 rounded-lg border border-slate-100">
-          <p class="font-bold text-slate-800 text-xs">📈 Pro Coaching Tip:</p>
-          <p class="text-slate-600 text-xs mt-0.5">Instead of saying "I was like hot", use "I'd like a hot small one, please" for cleaner professional phrasing.</p>
+          <span class="text-xs text-indigo-600 font-bold uppercase block">Overall Rating</span>
+          <span id="overallStars" class="text-2xl font-black text-indigo-700">⭐⭐⭐⭐</span>
         </div>
       </div>
 
@@ -238,60 +283,84 @@
   </div>
 
   <script>
-    // Multi-turn conversational flows
+    // Scenarios Setup
     const SCENARIOS = {
-      'casual-daily': {
-        role: "Barista / Local",
+      'casual-coffee': {
+        role: "Barista",
         context: "Coffee Shop Order",
         steps: [
           {
             ai: "Good morning! Welcome to Central Roast. What can I get started for you today?",
-            tip: "Say what coffee you want (e.g. 'Can I get a cappuccino?')",
-            aiReply: (text) => "Awesome! Hot or iced cappuccino, and what size would you like?",
-            coachTip: "Tip: Say 'I would like a hot small cappuccino, please.'"
+            tip: "Say what drink you want (e.g., 'Can I order a cappuccino?')",
+            aiReply: () => "Great choice! Would you like that hot or iced, and what size?",
+            coachTip: "State temperature (hot/iced) and size (small, regular, or large)."
           },
           {
-            aiReply: (text) => "Got it, small hot cappuccino! Would you like oat milk, regular milk, or any caramel syrup with that?",
-            coachTip: "Nice choice! Now mention your milk preference or syrup."
+            aiReply: () => "Got it. Would you like oat milk, regular whole milk, or any syrups like caramel or hazelnut?",
+            coachTip: "State your milk choice or say 'Just regular milk, please.'"
           },
           {
-            aiReply: (text) => "Sounds delicious. Would you also like a toasted chocolate croissant or blueberry muffin to go with your coffee?",
-            coachTip: "You can say 'No thank you, just the coffee' or choose a pastry!"
+            aiReply: () => "Delicious! Would you like a fresh croissant or muffin to go with your coffee?",
+            coachTip: "Say 'No thanks, just the coffee' or choose a snack."
           },
           {
-            aiReply: (text) => "Perfect! That will be $4.75. Cash or card today?",
-            coachTip: "Answer with 'I'll pay with card' or 'Cash, please.'"
+            aiReply: () => "All set! That will be $4.50. Will you be paying with cash or card today?",
+            coachTip: "Say 'I'll pay with card, please.'"
           },
           {
-            aiReply: (text) => "All set! Here is your receipt and your fresh cappuccino will be ready right at the counter in two minutes. Have a wonderful day!",
-            coachTip: "Great practice! Tap 'End Session' above to see your summary."
+            aiReply: () => "Payment complete! Your drink will be ready at the counter in two minutes. Have a wonderful day!",
+            coachTip: "Great job! Tap 'End Session' to see your average score."
+          }
+        ]
+      },
+      'casual-grocery': {
+        role: "Cashier",
+        context: "Supermarket Checkout",
+        steps: [
+          {
+            ai: "Hi! Did you find everything you were looking for today?",
+            tip: "Respond with a polite greeting.",
+            aiReply: () => "Perfect! Do you have our store loyalty rewards card or phone number?",
+            coachTip: "State if you have a rewards card."
+          },
+          {
+            aiReply: () => "Alright. Do you need paper bags or did you bring your own bag?",
+            coachTip: "State your bag choice."
+          },
+          {
+            aiReply: () => "Your total is $18.50. How would you like to pay today?",
+            coachTip: "Mention cash or card."
+          },
+          {
+            aiReply: () => "Here is your receipt inside the bag. Have a great day ahead!",
+            coachTip: "Thank the cashier and tap 'End Session'."
           }
         ]
       },
       'job-interview': {
         role: "HR Interviewer",
-        context: "Call Center / Job Interview",
+        context: "Job Interview",
         steps: [
           {
-            ai: "Hello! Welcome to your interview. To start off, could you tell me a little bit about yourself and your background?",
-            tip: "Briefly share your experience, skills, and why you are excited for this role.",
-            aiReply: (text) => "Thank you for sharing that. Why do you want to work with our company specifically?",
-            coachTip: "Show company interest and what value you can contribute."
+            ai: "Welcome to your interview! Could you please tell me a little bit about yourself and your work background?",
+            tip: "Share your experience and relevant skills.",
+            aiReply: () => "Thank you for sharing that. Why do you want to join our company specifically?",
+            coachTip: "Explain why you are interested in this specific role."
           },
           {
-            aiReply: (text) => "Good answer. Tell me about a time you handled a difficult situation with a coworker or client. How did you resolve it?",
-            coachTip: "Use the STAR method: Situation, Task, Action, Result."
+            aiReply: () => "Good. How do you handle stressful deadlines or high-volume tasks?",
+            coachTip: "Mention prioritization and staying calm under pressure."
           },
           {
-            aiReply: (text) => "Well handled! Where do you see yourself professionally in the next two to three years?",
-            coachTip: "Highlight professional growth and commitment."
+            aiReply: () => "Impressive. Where do you see yourself professionally in two to three years?",
+            coachTip: "Mention skill growth and career development."
           },
           {
-            aiReply: (text) => "Excellent. That covers all my questions today. Do you have any questions for me about the team or company?",
-            coachTip: "Ask a question like: 'What does success look like in this role?'"
+            aiReply: () => "That covers our interview questions. Do you have any questions for me about the role?",
+            coachTip: "Ask a question about team culture or next steps."
           },
           {
-            aiReply: (text) => "Great question! We will be in touch with the next steps by tomorrow. Thank you for your time!",
+            aiReply: () => "We will email you the results by tomorrow afternoon. Thank you for your time!",
             coachTip: "Politely thank the interviewer and tap 'End Session'."
           }
         ]
@@ -301,50 +370,78 @@
         context: "US E-commerce Escalation Call",
         steps: [
           {
-            ai: "Hi, I have been waiting for my replacement package for five days now and your tracking link is totally broken! What is going on?",
-            tip: "Acknowledge frustration and offer an immediate apology with empathy.",
-            aiReply: (text) => "Well, saying sorry won't get my package here! What can you do right now to check where it actually is?",
-            coachTip: "Ask for their order number or email with calm assurance."
+            ai: "Hi, I have been waiting for my replacement order for five days and your tracking link is broken! Where is my item?",
+            tip: "Show empathy and apologize for the inconvenience immediately.",
+            aiReply: () => "Saying sorry won't get my order here! What can you do right now to find it?",
+            coachTip: "Calmly ask for their order number or customer email."
           },
           {
-            aiReply: (text) => "My order number is #88491. Please tell me it isn't lost again!",
-            coachTip: "Assure the caller you are pulling up the file right now."
+            aiReply: () => "My order number is #88491. Please tell me it isn't lost again!",
+            coachTip: "Assure them you are pulling up their account details."
           },
           {
-            aiReply: (text) => "Okay, thank you for checking. Can you expedite the shipping so it arrives tomorrow?",
-            coachTip: "Confirm the expedited status or offer a tracking update by SMS."
+            aiReply: () => "Okay, can you expedite the shipping so it arrives tomorrow?",
+            coachTip: "Confirm that you will expedite the shipment."
           },
           {
-            aiReply: (text) => "Alright, I appreciate you resolving that quickly. Can you send the confirmation to my email?",
-            coachTip: "Confirm email delivery and ask if there is anything else."
+            aiReply: () => "Alright, thank you for fixing this. Can you send the confirmation to my email?",
+            coachTip: "Confirm email delivery and deliver your closing."
           },
           {
-            aiReply: (text) => "That's everything. Thank you for your patience.",
-            coachTip: "Deliver standard call center closing and tap 'End Session'."
-          }
-        ]
-      },
-      'meetings': {
-        role: "Team Lead",
-        context: "Agile Standup Meeting",
-        steps: [
-          {
-            ai: "Alright team, let's go around the room for our standup. What did you finish yesterday?",
-            tip: "State 1-2 completed tasks clearly and concisely.",
-            aiReply: (text) => "Great progress! What are your priority tasks for today?",
-            coachTip: "Outline your main goals for today."
-          },
-          {
-            aiReply: (text) => "Got it. Do you have any blockers or need help from design or backend?",
-            coachTip: "Say 'No blockers on my end' or mention what you need."
-          },
-          {
-            aiReply: (text) => "Awesome! Let's sync up after the call if anything comes up. Good luck today!",
-            coachTip: "Acknowledge with 'Thanks, talk to you later!' and tap End Session."
+            aiReply: () => "That's everything. Thank you for your help.",
+            coachTip: "Deliver your professional closing spiel and tap 'End Session'."
           }
         ]
       }
     };
+
+    // Instant Sentence Evaluator & Corrector (Rule-Based AI Engine)
+    function evaluateSentence(rawText) {
+      const text = rawText.toLowerCase().trim();
+      let rating = 4;
+      let stars = "⭐⭐⭐⭐";
+      let correction = "";
+      let explanation = "";
+
+      if (text.includes("i was like") || text.includes("was like")) {
+        rating = 3;
+        stars = "⭐⭐⭐";
+        correction = "I would like a hot, small size, please.";
+        explanation = "Avoid using 'I was like'. In English requests, use 'I would like...' or 'I'd prefer...'";
+      } else if (text.includes("can i order of") || text.includes("order of a")) {
+        rating = 3;
+        stars = "⭐⭐⭐";
+        correction = "Can I order a cup of cappuccino, please?";
+        explanation = "Say 'order a cup of cappuccino', not 'order of a 1 cup'.";
+      } else if (text.includes("i will cry") || text.includes("recognize your other")) {
+        rating = 2;
+        stars = "⭐⭐";
+        correction = "I will check your order details right away so we can deliver it on time.";
+        explanation = "Avoid speech recognition mishears; use 'check your order details'.";
+      } else if (text.includes("because of the storm that we experience")) {
+        rating = 3;
+        stars = "⭐⭐⭐";
+        correction = "Due to the severe weather we are currently experiencing in your area.";
+        explanation = "Say 'Due to the storm we are experiencing' for a professional BPO tone.";
+      } else if (text.split(" ").length < 3) {
+        rating = 3;
+        stars = "⭐⭐⭐";
+        correction = "Could you please elaborate in a complete sentence?";
+        explanation = "Practicing in full sentences improves speech fluency faster.";
+      } else if (!text.includes("please") && (text.startsWith("i want") || text.startsWith("give me"))) {
+        rating = 3;
+        stars = "⭐⭐⭐";
+        correction = rawText.replace(/i want/i, "Could I please have").replace(/give me/i, "May I have") + ", please.";
+        explanation = "Say 'Could I please have...' instead of 'I want' for polite tone.";
+      } else {
+        rating = 5;
+        stars = "⭐⭐⭐⭐⭐";
+        correction = rawText.charAt(0).toUpperCase() + rawText.slice(1);
+        explanation = "Excellent grammar and natural phrasing!";
+      }
+
+      return { rating, stars, correction, explanation };
+    }
 
     let activeSc = null;
     let currentStep = 0;
@@ -352,245 +449,3 @@
     let seconds = 0;
     let isListening = false;
     let reco = null;
-    let accumulatedText = "";
-
-    // Tabs
-    const btnConvo = document.getElementById('btnTabConvo');
-    const btnDrills = document.getElementById('btnTabDrills');
-    const viewConvo = document.getElementById('viewConvo');
-    const viewDrills = document.getElementById('viewDrills');
-    const tabContainer = document.getElementById('tabContainer');
-
-    btnConvo.onclick = () => {
-      btnConvo.className = "px-6 py-2 rounded-lg text-sm font-semibold bg-indigo-600 text-white shadow-sm transition";
-      btnDrills.className = "px-6 py-2 rounded-lg text-sm font-semibold text-slate-600 hover:text-slate-900 transition";
-      viewConvo.classList.remove('hidden');
-      viewDrills.classList.add('hidden');
-    };
-
-    btnDrills.onclick = () => {
-      btnDrills.className = "px-6 py-2 rounded-lg text-sm font-semibold bg-indigo-600 text-white shadow-sm transition";
-      btnConvo.className = "px-6 py-2 rounded-lg text-sm font-semibold text-slate-600 hover:text-slate-900 transition";
-      viewDrills.classList.remove('hidden');
-      viewConvo.classList.add('hidden');
-    };
-
-    function speakAudio(text) {
-      if (!window.speechSynthesis) return;
-      window.speechSynthesis.cancel();
-      const utter = new SpeechSynthesisUtterance(text);
-      utter.lang = "en-US";
-      utter.rate = 0.95;
-      window.speechSynthesis.speak(utter);
-    }
-
-    function initSpeech() {
-      const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
-      if (!SpeechRecognition) return;
-
-      reco = new SpeechRecognition();
-      reco.continuous = true;
-      reco.interimResults = true;
-      reco.lang = "en-US";
-
-      reco.onresult = (e) => {
-        let interim = '';
-        for (let i = e.resultIndex; i < e.results.length; ++i) {
-          if (e.results[i].isFinal) {
-            accumulatedText += e.results[i][0].transcript + ' ';
-          } else {
-            interim += e.results[i][0].transcript;
-          }
-        }
-        const currentSpoken = (accumulatedText + interim).trim();
-        document.getElementById('liveHeardText').textContent = currentSpoken || "Listening...";
-        document.getElementById('userTextInput').value = currentSpoken;
-      };
-
-      reco.onerror = (e) => {
-        console.warn("Speech error:", e.error);
-      };
-
-      reco.onend = () => {
-        if (isListening) {
-          try { reco.start(); } catch(err){}
-        }
-      };
-    }
-    initSpeech();
-
-    function setMicState(listening) {
-      isListening = listening;
-      const btn = document.getElementById('micBtn');
-      const lbl = document.getElementById('micLabel');
-      const ind = document.getElementById('micIndicator');
-
-      if (listening) {
-        accumulatedText = "";
-        lbl.textContent = "Stop & Send Speech";
-        btn.className = "w-full py-2.5 px-4 rounded-xl font-bold text-sm text-white bg-red-500 hover:bg-red-600 transition flex items-center justify-center gap-2 animate-pulse";
-        ind.classList.remove('hidden');
-        document.getElementById('liveHeardText').textContent = "Listening... Speak now.";
-      } else {
-        lbl.textContent = "Tap & Speak";
-        btn.className = "w-full py-2.5 px-4 rounded-xl font-bold text-sm text-indigo-700 bg-indigo-50 hover:bg-indigo-100 border border-indigo-200 transition flex items-center justify-center gap-2";
-        ind.classList.add('hidden');
-      }
-    }
-
-    function toggleMic() {
-      if (!reco) {
-        alert("Speech recognition is not supported on this browser. You can type in the box below!");
-        return;
-      }
-
-      if (isListening) {
-        isListening = false;
-        reco.stop();
-        setMicState(false);
-        const finalMsg = document.getElementById('userTextInput').value.trim();
-        if (finalMsg) {
-          handleUserReply(finalMsg);
-          document.getElementById('userTextInput').value = "";
-        }
-      } else {
-        try {
-          accumulatedText = "";
-          reco.start();
-          setMicState(true);
-        } catch(e) {
-          console.error(e);
-        }
-      }
-    }
-
-    function sendManualText() {
-      const input = document.getElementById('userTextInput');
-      const val = input.value.trim();
-      if (!val) return;
-      if (isListening && reco) {
-        isListening = false;
-        reco.stop();
-        setMicState(false);
-      }
-      input.value = "";
-      handleUserReply(val);
-    }
-
-    function startCall(id) {
-      activeSc = id;
-      currentStep = 0;
-      const sc = SCENARIOS[id];
-      document.getElementById('callRole').textContent = sc.role;
-      document.getElementById('callContext').textContent = sc.context;
-
-      tabContainer.classList.add('hidden');
-      viewConvo.classList.add('hidden');
-      viewDrills.classList.add('hidden');
-      document.getElementById('feedbackScreen').classList.add('hidden');
-      document.getElementById('callScreen').classList.remove('hidden');
-
-      const chat = document.getElementById('chatBox');
-      const initialStep = sc.steps[0];
-      chat.innerHTML = `
-        <div class="flex flex-col items-start">
-          <div class="max-w-[85%] rounded-2xl rounded-bl-none px-4 py-2.5 text-sm bg-white text-slate-800 border border-slate-200 shadow-sm">
-            ${initialStep.ai}
-          </div>
-          <div class="mt-1.5 max-w-[80%] bg-amber-50 border border-amber-200 rounded-lg p-2 text-xs text-amber-800">
-            ✨ <b>Coach:</b> ${initialStep.tip}
-          </div>
-        </div>
-      `;
-
-      speakAudio(initialStep.ai);
-
-      seconds = 0;
-      clearInterval(timerInterval);
-      timerInterval = setInterval(() => {
-        seconds++;
-        const m = String(Math.floor(seconds / 60)).padStart(2, '0');
-        const s = String(seconds % 60).padStart(2, '0');
-        document.getElementById('callTimer').textContent = `${m}:${s}`;
-      }, 1000);
-    }
-
-    function handleUserReply(text) {
-      const chat = document.getElementById('chatBox');
-      chat.innerHTML += `
-        <div class="flex flex-col items-end">
-          <div class="max-w-[85%] rounded-2xl rounded-br-none px-4 py-2.5 text-sm bg-indigo-600 text-white shadow-sm">
-            ${text}
-          </div>
-        </div>
-      `;
-      chat.scrollTop = chat.scrollHeight;
-
-      setTimeout(() => {
-        const sc = SCENARIOS[activeSc];
-        const step = sc.steps[currentStep];
-
-        let reply = "";
-        let coachTip = "";
-
-        if (step && step.aiReply) {
-          reply = step.aiReply(text);
-          coachTip = step.coachTip;
-        } else {
-          reply = "Thank you so much! You did an awesome job in this conversation practice.";
-          coachTip = "Session complete! Click 'End Session' at the top to view your feedback.";
-        }
-
-        currentStep++;
-
-        chat.innerHTML += `
-          <div class="flex flex-col items-start">
-            <div class="max-w-[85%] rounded-2xl rounded-bl-none px-4 py-2.5 text-sm bg-white text-slate-800 border border-slate-200 shadow-sm">
-              ${reply}
-            </div>
-            <div class="mt-1.5 max-w-[80%] bg-amber-50 border border-amber-200 rounded-lg p-2 text-xs text-amber-800">
-              ✨ <b>Coach:</b> ${coachTip}
-            </div>
-          </div>
-        `;
-        chat.scrollTop = chat.scrollHeight;
-        speakAudio(reply);
-      }, 600);
-    }
-
-    function finishCall() {
-      clearInterval(timerInterval);
-      if (window.speechSynthesis) window.speechSynthesis.cancel();
-      if (isListening && reco) {
-        isListening = false;
-        reco.stop();
-      }
-      document.getElementById('callScreen').classList.add('hidden');
-      document.getElementById('feedbackScreen').classList.remove('hidden');
-      document.getElementById('fbMeta').textContent = `Duration: ${Math.floor(seconds/60)}m ${seconds%60}s`;
-    }
-
-    function closeFeedback() {
-      document.getElementById('feedbackScreen').classList.add('hidden');
-      tabContainer.classList.remove('hidden');
-      viewConvo.classList.remove('hidden');
-    }
-
-    // Modal
-    document.getElementById('passBtn').onclick = () => toggleModal(true);
-    function toggleModal(open) {
-      document.getElementById('passModal').classList.toggle('hidden', !open);
-    }
-    function activatePass() {
-      const val = document.getElementById('refInput').value.trim();
-      if (val.length >= 4) {
-        localStorage.setItem('fluentbuddy_pass', 'active');
-        toggleModal(false);
-        alert('Pass Activated successfully!');
-      } else {
-        alert('Please enter a valid GCash Reference Number or PIN.');
-      }
-    }
-  </script>
-</body>
-</html>
