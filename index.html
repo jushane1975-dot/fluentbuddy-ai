@@ -22,7 +22,7 @@
       <span class="inline-flex items-center gap-1 text-xs font-semibold px-2.5 py-1 rounded-full bg-amber-50 text-amber-700 border border-amber-200">
         🔥 0 Day Streak
       </span>
-      <button id="passBtn" class="text-xs font-bold px-3 py-1.5 rounded-lg border bg-indigo-50 text-indigo-700 border-indigo-200 hover:bg-indigo-100 transition">
+      <button onclick="toggleModal(true)" class="text-xs font-bold px-3 py-1.5 rounded-lg border bg-indigo-50 text-indigo-700 border-indigo-200 hover:bg-indigo-100 transition">
         Get Pass (₱99)
       </button>
     </div>
@@ -33,10 +33,10 @@
     <!-- Tab Controls -->
     <div id="tabContainer" class="flex justify-center mb-8">
       <div class="inline-flex p-1 bg-slate-200 rounded-xl">
-        <button id="btnTabConvo" class="px-6 py-2 rounded-lg text-sm font-semibold bg-indigo-600 text-white shadow-sm transition">
+        <button id="btnTabConvo" onclick="switchTab('convo')" class="px-6 py-2 rounded-lg text-sm font-semibold bg-indigo-600 text-white shadow-sm transition">
           Conversation
         </button>
-        <button id="btnTabDrills" class="px-6 py-2 rounded-lg text-sm font-semibold text-slate-600 hover:text-slate-900 transition">
+        <button id="btnTabDrills" onclick="switchTab('drills')" class="px-6 py-2 rounded-lg text-sm font-semibold text-slate-600 hover:text-slate-900 transition">
           Pronunciation Drills
         </button>
       </div>
@@ -55,7 +55,7 @@
 
       <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
         <!-- Job Interview -->
-        <div onclick="startCall('job-interview')" class="bg-white border border-slate-200 hover:border-indigo-500 hover:shadow-md transition cursor-pointer rounded-2xl p-5 flex flex-col justify-between">
+        <div onclick="startCall('job-interview')" role="button" tabindex="0" class="bg-white border border-slate-200 hover:border-indigo-500 hover:shadow-md transition cursor-pointer rounded-2xl p-5 flex flex-col justify-between select-none active:scale-[0.98]">
           <div>
             <div class="text-3xl mb-3">💼</div>
             <h3 class="font-bold text-lg text-slate-800">Job Interview</h3>
@@ -67,7 +67,7 @@
         </div>
 
         <!-- BPO Mock Call -->
-        <div onclick="startCall('bpo-call')" class="bg-white border border-slate-200 hover:border-indigo-500 hover:shadow-md transition cursor-pointer rounded-2xl p-5 flex flex-col justify-between">
+        <div onclick="startCall('bpo-call')" role="button" tabindex="0" class="bg-white border border-slate-200 hover:border-indigo-500 hover:shadow-md transition cursor-pointer rounded-2xl p-5 flex flex-col justify-between select-none active:scale-[0.98]">
           <div>
             <div class="text-3xl mb-3">🎧</div>
             <h3 class="font-bold text-lg text-slate-800">BPO Mock Call</h3>
@@ -79,7 +79,7 @@
         </div>
 
         <!-- Coffee Shop -->
-        <div onclick="startCall('casual-coffee')" class="bg-white border border-slate-200 hover:border-indigo-500 hover:shadow-md transition cursor-pointer rounded-2xl p-5 flex flex-col justify-between">
+        <div onclick="startCall('casual-coffee')" role="button" tabindex="0" class="bg-white border border-slate-200 hover:border-indigo-500 hover:shadow-md transition cursor-pointer rounded-2xl p-5 flex flex-col justify-between select-none active:scale-[0.98]">
           <div>
             <div class="text-3xl mb-3">☕</div>
             <h3 class="font-bold text-lg text-slate-800">Daily: Coffee Shop</h3>
@@ -91,7 +91,7 @@
         </div>
 
         <!-- Grocery Checkout -->
-        <div onclick="startCall('casual-grocery')" class="bg-white border border-slate-200 hover:border-indigo-500 hover:shadow-md transition cursor-pointer rounded-2xl p-5 flex flex-col justify-between">
+        <div onclick="startCall('casual-grocery')" role="button" tabindex="0" class="bg-white border border-slate-200 hover:border-indigo-500 hover:shadow-md transition cursor-pointer rounded-2xl p-5 flex flex-col justify-between select-none active:scale-[0.98]">
           <div>
             <div class="text-3xl mb-3">🛒</div>
             <h3 class="font-bold text-lg text-slate-800">Daily: Grocery Checkout</h3>
@@ -104,7 +104,7 @@
       </div>
     </div>
 
-    <!-- Pronunciation Tab Content (Sentences & Audio) -->
+    <!-- Pronunciation Tab Content -->
     <div id="viewDrills" class="hidden">
       <div class="text-center mb-6">
         <h2 class="text-2xl font-bold text-slate-800">Pinoy Accent & Sound Drills</h2>
@@ -112,7 +112,7 @@
       </div>
 
       <div class="space-y-4">
-        <!-- Drill 1: P vs F -->
+        <!-- P vs F -->
         <div class="bg-white border border-slate-200 rounded-xl p-4 shadow-sm">
           <div class="flex items-center justify-between mb-2">
             <span class="font-bold text-indigo-700">1. P vs F Sound</span>
@@ -132,7 +132,7 @@
           </div>
         </div>
 
-        <!-- Drill 2: B vs V -->
+        <!-- B vs V -->
         <div class="bg-white border border-slate-200 rounded-xl p-4 shadow-sm">
           <div class="flex items-center justify-between mb-2">
             <span class="font-bold text-indigo-700">2. B vs V Sound</span>
@@ -152,7 +152,7 @@
           </div>
         </div>
 
-        <!-- Drill 3: S vs SH -->
+        <!-- S vs SH -->
         <div class="bg-white border border-slate-200 rounded-xl p-4 shadow-sm">
           <div class="flex items-center justify-between mb-2">
             <span class="font-bold text-indigo-700">3. S vs SH Sound</span>
@@ -172,7 +172,7 @@
           </div>
         </div>
 
-        <!-- Drill 4: TH Sound -->
+        <!-- TH Sound -->
         <div class="bg-white border border-slate-200 rounded-xl p-4 shadow-sm">
           <div class="flex items-center justify-between mb-2">
             <span class="font-bold text-indigo-700">4. TH Sound</span>
@@ -215,7 +215,7 @@
       <!-- Messages Box -->
       <div id="chatBox" class="flex-1 p-4 overflow-y-auto space-y-4 bg-slate-50"></div>
 
-      <!-- Mic Listening Status Bar -->
+      <!-- Mic Active Indicator -->
       <div id="micIndicator" class="hidden bg-indigo-50 px-4 py-2 text-xs text-indigo-700 border-t border-indigo-100 flex items-center justify-between">
         <div class="flex items-center gap-2">
           <span class="w-2.5 h-2.5 rounded-full bg-red-500 animate-ping"></span>
@@ -224,10 +224,10 @@
         <span class="text-[10px] text-slate-400 font-mono">MIC ACTIVE</span>
       </div>
 
-      <!-- Input Controls -->
+      <!-- Controls -->
       <div class="p-3 bg-white border-t border-slate-200 space-y-2">
         <div class="flex items-center gap-2">
-          <input id="userTextInput" type="text" placeholder="Type here or tap mic to speak..." class="flex-1 border border-slate-300 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500" onkeydown="if(event.key === 'Enter') sendManualText()" />
+          <input id="userTextInput" type="text" placeholder="Type response here or tap mic..." class="flex-1 border border-slate-300 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500" onkeydown="if(event.key === 'Enter') sendManualText()" />
           <button onclick="sendManualText()" class="bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2.5 rounded-xl font-bold text-sm transition">
             Send
           </button>
@@ -240,7 +240,7 @@
       </div>
     </div>
 
-    <!-- Final Summary Feedback Screen -->
+    <!-- Feedback Summary Screen -->
     <div id="feedbackScreen" class="hidden bg-white border border-slate-200 rounded-2xl p-6 shadow-lg max-w-lg mx-auto text-center">
       <div class="text-4xl mb-2">🎉</div>
       <h3 class="text-2xl font-extrabold text-slate-800">Practice Completed!</h3>
@@ -283,7 +283,6 @@
   </div>
 
   <script>
-    // Scenarios Setup
     const SCENARIOS = {
       'casual-coffee': {
         role: "Barista",
@@ -296,12 +295,12 @@
             coachTip: "State temperature (hot/iced) and size (small, regular, or large)."
           },
           {
-            aiReply: () => "Got it. Would you like oat milk, regular whole milk, or any syrups like caramel or hazelnut?",
+            aiReply: () => "Got it. Would you like oat milk, regular whole milk, or any flavor syrups?",
             coachTip: "State your milk choice or say 'Just regular milk, please.'"
           },
           {
             aiReply: () => "Delicious! Would you like a fresh croissant or muffin to go with your coffee?",
-            coachTip: "Say 'No thanks, just the coffee' or choose a snack."
+            coachTip: "Say 'No thanks, just the coffee' or choose a pastry."
           },
           {
             aiReply: () => "All set! That will be $4.50. Will you be paying with cash or card today?",
@@ -354,98 +353,3 @@
           {
             aiReply: () => "Impressive. Where do you see yourself professionally in two to three years?",
             coachTip: "Mention skill growth and career development."
-          },
-          {
-            aiReply: () => "That covers our interview questions. Do you have any questions for me about the role?",
-            coachTip: "Ask a question about team culture or next steps."
-          },
-          {
-            aiReply: () => "We will email you the results by tomorrow afternoon. Thank you for your time!",
-            coachTip: "Politely thank the interviewer and tap 'End Session'."
-          }
-        ]
-      },
-      'bpo-call': {
-        role: "Angry Customer (US)",
-        context: "US E-commerce Escalation Call",
-        steps: [
-          {
-            ai: "Hi, I have been waiting for my replacement order for five days and your tracking link is broken! Where is my item?",
-            tip: "Show empathy and apologize for the inconvenience immediately.",
-            aiReply: () => "Saying sorry won't get my order here! What can you do right now to find it?",
-            coachTip: "Calmly ask for their order number or customer email."
-          },
-          {
-            aiReply: () => "My order number is #88491. Please tell me it isn't lost again!",
-            coachTip: "Assure them you are pulling up their account details."
-          },
-          {
-            aiReply: () => "Okay, can you expedite the shipping so it arrives tomorrow?",
-            coachTip: "Confirm that you will expedite the shipment."
-          },
-          {
-            aiReply: () => "Alright, thank you for fixing this. Can you send the confirmation to my email?",
-            coachTip: "Confirm email delivery and deliver your closing."
-          },
-          {
-            aiReply: () => "That's everything. Thank you for your help.",
-            coachTip: "Deliver your professional closing spiel and tap 'End Session'."
-          }
-        ]
-      }
-    };
-
-    // Instant Sentence Evaluator & Corrector (Rule-Based AI Engine)
-    function evaluateSentence(rawText) {
-      const text = rawText.toLowerCase().trim();
-      let rating = 4;
-      let stars = "⭐⭐⭐⭐";
-      let correction = "";
-      let explanation = "";
-
-      if (text.includes("i was like") || text.includes("was like")) {
-        rating = 3;
-        stars = "⭐⭐⭐";
-        correction = "I would like a hot, small size, please.";
-        explanation = "Avoid using 'I was like'. In English requests, use 'I would like...' or 'I'd prefer...'";
-      } else if (text.includes("can i order of") || text.includes("order of a")) {
-        rating = 3;
-        stars = "⭐⭐⭐";
-        correction = "Can I order a cup of cappuccino, please?";
-        explanation = "Say 'order a cup of cappuccino', not 'order of a 1 cup'.";
-      } else if (text.includes("i will cry") || text.includes("recognize your other")) {
-        rating = 2;
-        stars = "⭐⭐";
-        correction = "I will check your order details right away so we can deliver it on time.";
-        explanation = "Avoid speech recognition mishears; use 'check your order details'.";
-      } else if (text.includes("because of the storm that we experience")) {
-        rating = 3;
-        stars = "⭐⭐⭐";
-        correction = "Due to the severe weather we are currently experiencing in your area.";
-        explanation = "Say 'Due to the storm we are experiencing' for a professional BPO tone.";
-      } else if (text.split(" ").length < 3) {
-        rating = 3;
-        stars = "⭐⭐⭐";
-        correction = "Could you please elaborate in a complete sentence?";
-        explanation = "Practicing in full sentences improves speech fluency faster.";
-      } else if (!text.includes("please") && (text.startsWith("i want") || text.startsWith("give me"))) {
-        rating = 3;
-        stars = "⭐⭐⭐";
-        correction = rawText.replace(/i want/i, "Could I please have").replace(/give me/i, "May I have") + ", please.";
-        explanation = "Say 'Could I please have...' instead of 'I want' for polite tone.";
-      } else {
-        rating = 5;
-        stars = "⭐⭐⭐⭐⭐";
-        correction = rawText.charAt(0).toUpperCase() + rawText.slice(1);
-        explanation = "Excellent grammar and natural phrasing!";
-      }
-
-      return { rating, stars, correction, explanation };
-    }
-
-    let activeSc = null;
-    let currentStep = 0;
-    let timerInterval = null;
-    let seconds = 0;
-    let isListening = false;
-    let reco = null;
